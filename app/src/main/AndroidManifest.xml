@@ -9,9 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DozeEmDoze">
+        <activity
+            android:name=".AdicionarMedicacao"
+            android:parentActivityName=".Medicacoes" />
+        <activity
+            android:name=".Medicacoes"
+            android:label="@string/title_activity_medicacoes"
+            android:theme="@style/Theme.DozeEmDoze.NoActionBar"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

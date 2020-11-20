@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
             logOutButton.visibility = View.VISIBLE
         }
         else {
+            userTextView.text = "Log in"
             signInButton.visibility = View.VISIBLE
             logOutButton.visibility = View.GONE
         }
@@ -40,7 +41,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onSignIn (v: View) {
-
         // Choose authentication providers
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build(),
@@ -84,5 +84,12 @@ class MainActivity : AppCompatActivity() {
                 .addOnCompleteListener {
                     updateAuthButtons()
                 }
+    }
+
+    fun startMedicacoes(view: View) {
+        val intent = Intent(this, Medicacoes::class.java)
+            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            .apply{}
+        startActivity(intent)
     }
 }
