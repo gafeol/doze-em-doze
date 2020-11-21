@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -16,7 +17,8 @@ import com.google.firebase.database.ValueEventListener
 // TODO: tornar classe de entrada quando usuário já está logado
 class Medicacoes : AppCompatActivity() {
 
-    val meds = FirebaseDatabase.getInstance().getReference("name")
+    private val userUID = FirebaseAuth.getInstance().currentUser?.uid.toString()
+    val meds = FirebaseDatabase.getInstance().getReference(userUID + "/med/name")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +30,10 @@ class Medicacoes : AppCompatActivity() {
                 val medTextView = findViewById<TextView>(R.id.medTextView)
                 medTextView.text = snapshot.value.toString()
             }
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
         })
-
 
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener{v -> startAddMedication(v)}
     }

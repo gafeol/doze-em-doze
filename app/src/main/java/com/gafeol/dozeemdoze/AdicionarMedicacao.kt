@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
 class AdicionarMedicacao : AppCompatActivity() {
@@ -12,10 +13,12 @@ class AdicionarMedicacao : AppCompatActivity() {
         setContentView(R.layout.activity_adicionar_medicacao)
     }
 
+    private val userUID = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
     fun saveMedication(view: View) {
         var nameEditText = findViewById<EditText>(R.id.nameEditText)
         val db = FirebaseDatabase.getInstance()
-        val myRef = db.getReference("name")
+        val myRef = db.getReference(userUID + "/med/name")
         myRef.setValue(nameEditText.text.toString()).addOnSuccessListener { finish() }
     }
 }
