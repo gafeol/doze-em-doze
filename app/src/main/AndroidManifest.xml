@@ -16,8 +16,8 @@
             android:name=".Medicacoes"
             android:label="@string/title_activity_medicacoes"
             android:theme="@style/Theme.DozeEmDoze.NoActionBar"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".MainActivity">
+            android:parentActivityName=".Navegacao"/>
+        <activity android:name=".Navegacao">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

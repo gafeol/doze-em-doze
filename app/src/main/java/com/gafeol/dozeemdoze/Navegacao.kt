@@ -12,31 +12,28 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 
-class MainActivity : AppCompatActivity() {
+class Navegacao : AppCompatActivity() {
     private val RC_SIGN_IN: Int = 123
 
     private fun updateAuthButtons() {
         var signInButton = findViewById<Button>(R.id.signInButton)
-        var logOutButton = findViewById<Button>(R.id.signOutButton)
         var userTextView = findViewById<TextView>(R.id.userTextView)
 
         val user = FirebaseAuth.getInstance().currentUser
         if(user != null) {
-            userTextView.text = "Hello " + user.displayName
             signInButton.visibility = View.GONE
-            logOutButton.visibility = View.VISIBLE
+            startMedicacoes()
         }
         else {
-            userTextView.text = "Log in"
+            userTextView.text = "Clique em Sign In para entrar ou criar uma conta!"
             signInButton.visibility = View.VISIBLE
-            logOutButton.visibility = View.GONE
         }
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_navegacao)
         updateAuthButtons()
     }
 
@@ -78,18 +75,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onSignOut(view: View) {
-        AuthUI.getInstance()
-                .signOut(this)
-                .addOnCompleteListener {
-                    updateAuthButtons()
-                }
-    }
-
-    fun startMedicacoes(view: View) {
-        val intent = Intent(this, Medicacoes::class.java)
-            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            .apply{}
+    private fun startMedicacoes() {
+        val intent = Intent(this, Medicacoes::class.java).apply{}
         startActivity(intent)
+        finish()
     }
 }

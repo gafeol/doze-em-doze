@@ -2,23 +2,24 @@ package com.gafeol.dozeemdoze
 
 import android.content.Intent
 import android.os.Bundle
-import android.renderscript.Sampler
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import com.firebase.ui.auth.AuthUI
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-// TODO: tornar classe de entrada quando usuário já está logado
 class Medicacoes : AppCompatActivity() {
-
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid.toString()
-    val meds = FirebaseDatabase.getInstance().getReference(userUID + "/med/name")
+    val meds = FirebaseDatabase.getInstance().getReference(userUID + "/medication")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +31,31 @@ class Medicacoes : AppCompatActivity() {
                 val medTextView = findViewById<TextView>(R.id.medTextView)
                 medTextView.text = snapshot.value.toString()
             }
+
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.d("FIREBASE", "Cancelled meds")
             }
         })
 
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener{v -> startAddMedication(v)}
+        /* TODO: Create arraylist of medicine on firebase under user's uid
+        val adapter = ArrayAdapter(this, R.layout.row_medicacao, meds.getChildren()))
+        list = findViewById<View>(R.id.list) as ListView
+        list.setAdapter(adapter)
+        list.setOnItemClickListener(object : OnItemClickListener() {
+            fun onItemClick(
+                parent: AdapterView<*>?, view: View?,
+                position: Int, id: Long
+            ) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "You Clicked at " + web.get(+position),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+        */
+
+        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener{ v -> startAddMedication(v)}
     }
 
     fun startAddMedication(v: View){
@@ -48,5 +68,25 @@ class Medicacoes : AppCompatActivity() {
         if(requestCode == 0) {
             var message = data?.getStringExtra("MESSAGE");
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.medication_menu, menu)
+        return true
+    }
+
+    private fun signOut() {
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener {
+                    finish();
+                }
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.signOutItem){
+            signOut()
+            return true;
+        }
+        return false;
     }
 }
