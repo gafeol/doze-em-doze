@@ -18,7 +18,8 @@ class AdicionarMedicacao : AppCompatActivity() {
     fun saveMedication(view: View) {
         var nameEditText = findViewById<EditText>(R.id.nameEditText)
         val db = FirebaseDatabase.getInstance()
-        val myRef = db.getReference(userUID + "/med/name")
-        myRef.setValue(nameEditText.text.toString()).addOnSuccessListener { finish() }
+        val medName = nameEditText.text.toString()
+        val myRef = db.getReference("$userUID/medication/$medName")
+        myRef.setValue(true).addOnSuccessListener { finish() }
     }
 }

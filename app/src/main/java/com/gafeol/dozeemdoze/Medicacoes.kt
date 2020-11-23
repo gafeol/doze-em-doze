@@ -6,8 +6,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -28,32 +27,31 @@ class Medicacoes : AppCompatActivity() {
 
         meds.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val medTextView = findViewById<TextView>(R.id.medTextView)
-                medTextView.text = snapshot.value.toString()
+                val medListView = findViewById<ListView>(R.id.medListView)
+                var list = mutableListOf<String>()
+                for(child in snapshot.children){
+                    list.add(child.key!!)
+                }
+                val adapter = MedicacaoAdapter(applicationContext, parse(list))
+                medListView.setAdapter(adapter)
+                medListView.setOnItemClickListener(object : AdapterView.OnItemClickListener {
+                    override fun onItemClick(
+                            parent: AdapterView<*>?, view: View?,
+                            position: Int, id: Long
+                    ) {
+                        Toast.makeText(
+                                applicationContext,
+                                "You Clicked at " + list.get(position),
+                                Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
             }
-
             override fun onCancelled(error: DatabaseError) {
-                Log.d("FIREBASE", "Cancelled meds")
+                Log.d("FIREBASE", "Cancelled meds search")
             }
         })
 
-        /* TODO: Create arraylist of medicine on firebase under user's uid
-        val adapter = ArrayAdapter(this, R.layout.row_medicacao, meds.getChildren()))
-        list = findViewById<View>(R.id.list) as ListView
-        list.setAdapter(adapter)
-        list.setOnItemClickListener(object : OnItemClickListener() {
-            fun onItemClick(
-                parent: AdapterView<*>?, view: View?,
-                position: Int, id: Long
-            ) {
-                Toast.makeText(
-                    this@MainActivity,
-                    "You Clicked at " + web.get(+position),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
-        */
 
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener{ v -> startAddMedication(v)}
     }
@@ -79,7 +77,9 @@ class Medicacoes : AppCompatActivity() {
         AuthUI.getInstance()
                 .signOut(this)
                 .addOnCompleteListener {
+                    val intent = Intent(applicationContext, Navegacao::class.java)
                     finish();
+                    startActivity(intent)
                 }
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -89,4 +89,6 @@ class Medicacoes : AppCompatActivity() {
         }
         return false;
     }
+
 }
+

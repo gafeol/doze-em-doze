@@ -10,7 +10,7 @@
             android:layout_height="50dp"/>
 
         <TextView
-            android:id="@+id/medRowTitleTextView"
+            android:id="@+id/medTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="50dp" />
     </TableRow>
