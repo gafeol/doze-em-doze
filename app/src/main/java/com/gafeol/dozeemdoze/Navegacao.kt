@@ -77,7 +77,7 @@ class Navegacao : AppCompatActivity() {
 
     private fun startMedicacoes() {
         val intent = Intent(this, Medicacoes::class.java).apply{}
-        startActivity(intent)
         finish()
+        startActivity(intent)
     }
 }

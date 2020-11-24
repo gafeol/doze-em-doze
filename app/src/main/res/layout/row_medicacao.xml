@@ -5,7 +5,8 @@
     android:layout_height="match_parent" >
     <TableRow>
         <ImageView
-            android:id="@+id/medRowImageView"
+            android:id="@+id/medImageView"
+            android:layout_margin="5dp"
             android:layout_width="50dp"
             android:layout_height="50dp"/>
 

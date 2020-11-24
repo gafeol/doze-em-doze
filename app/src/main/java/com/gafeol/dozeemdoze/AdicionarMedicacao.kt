@@ -21,5 +21,6 @@ class AdicionarMedicacao : AppCompatActivity() {
         val medName = nameEditText.text.toString()
         val myRef = db.getReference("$userUID/medication/$medName")
         myRef.setValue(true).addOnSuccessListener { finish() }
+        myRef.child("img").setValue(R.drawable.ic_pills)
     }
 }

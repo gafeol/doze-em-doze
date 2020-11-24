@@ -18,21 +18,21 @@ import com.google.firebase.database.ValueEventListener
 
 class Medicacoes : AppCompatActivity() {
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid.toString()
-    val meds = FirebaseDatabase.getInstance().getReference(userUID + "/medication")
+    val dbRef = FirebaseDatabase.getInstance().getReference("$userUID/medication")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_medicacoes)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        meds.addValueEventListener(object : ValueEventListener {
+        dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val medListView = findViewById<ListView>(R.id.medListView)
-                var list = mutableListOf<String>()
-                for(child in snapshot.children){
-                    list.add(child.key!!)
+                var list = mutableListOf<Medicacao>()
+                for(med in snapshot.children){
+                    list.add(Medicacao(med.key!!, med.child("img").value as Long))
                 }
-                val adapter = MedicacaoAdapter(applicationContext, parse(list))
+                val adapter = MedicacaoAdapter(applicationContext, list)
                 medListView.setAdapter(adapter)
                 medListView.setOnItemClickListener(object : AdapterView.OnItemClickListener {
                     override fun onItemClick(
@@ -41,7 +41,7 @@ class Medicacoes : AppCompatActivity() {
                     ) {
                         Toast.makeText(
                                 applicationContext,
-                                "You Clicked at " + list.get(position),
+                                "You Clicked at " + list.get(position).name,
                                 Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -51,8 +51,6 @@ class Medicacoes : AppCompatActivity() {
                 Log.d("FIREBASE", "Cancelled meds search")
             }
         })
-
-
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener{ v -> startAddMedication(v)}
     }
 
@@ -89,6 +87,5 @@ class Medicacoes : AppCompatActivity() {
         }
         return false;
     }
-
 }
 
