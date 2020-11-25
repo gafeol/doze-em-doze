@@ -11,6 +11,7 @@
         android:theme="@style/Theme.DozeEmDoze">
         <activity
             android:name=".AdicionarMedicacao"
+            android:label="Adicionar Medicação"
             android:parentActivityName=".Medicacoes" />
         <activity
             android:name=".Medicacoes"

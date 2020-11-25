@@ -46,6 +46,8 @@ class Navegacao : AppCompatActivity() {
             AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(providers)
+                .setTheme(R.style.Theme_DozeEmDoze_NoActionBar)
+                .setLogo(R.drawable.ic_prescription)
                 .build(),
             RC_SIGN_IN)
     }
