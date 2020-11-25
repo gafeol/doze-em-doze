@@ -17,7 +17,6 @@ class Navegacao : AppCompatActivity() {
 
     private fun updateAuthButtons() {
         var signInButton = findViewById<Button>(R.id.signInButton)
-        var userTextView = findViewById<TextView>(R.id.userTextView)
 
         val user = FirebaseAuth.getInstance().currentUser
         if(user != null) {
@@ -25,7 +24,6 @@ class Navegacao : AppCompatActivity() {
             startMedicacoes()
         }
         else {
-            userTextView.text = "Clique em Sign In para entrar ou criar uma conta!"
             signInButton.visibility = View.VISIBLE
         }
     }
