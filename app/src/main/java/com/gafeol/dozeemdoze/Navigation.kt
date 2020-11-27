@@ -7,12 +7,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.TextView
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 
-class Navegacao : AppCompatActivity() {
+class Navigation : AppCompatActivity() {
     private val RC_SIGN_IN: Int = 123
 
     private fun updateAuthButtons() {
@@ -21,7 +20,7 @@ class Navegacao : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().currentUser
         if(user != null) {
             signInButton.visibility = View.GONE
-            startMedicacoes()
+            startMedications()
         }
         else {
             signInButton.visibility = View.VISIBLE
@@ -31,7 +30,7 @@ class Navegacao : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_navegacao)
+        setContentView(R.layout.activity_navigation)
         updateAuthButtons()
     }
 
@@ -75,8 +74,8 @@ class Navegacao : AppCompatActivity() {
         }
     }
 
-    private fun startMedicacoes() {
-        val intent = Intent(this, Medicacoes::class.java).apply{}
+    private fun startMedications() {
+        val intent = Intent(this, Medications::class.java).apply{}
         finish()
         startActivity(intent)
     }

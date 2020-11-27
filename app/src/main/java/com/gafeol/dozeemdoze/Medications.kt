@@ -16,23 +16,25 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class Medicacoes : AppCompatActivity() {
+class Medications : AppCompatActivity() {
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid.toString()
     val dbRef = FirebaseDatabase.getInstance().getReference("$userUID/medication")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_medicacoes)
+        setContentView(R.layout.activity_medications)
         setSupportActionBar(findViewById(R.id.toolbar))
 
         dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val medListView = findViewById<ListView>(R.id.medListView)
-                var list = mutableListOf<Medicacao>()
+                var list = mutableListOf<Medication>()
                 for(med in snapshot.children){
-                    list.add(Medicacao(med.key!!, med.child("img").value as Long))
+                    println(med)
+                    val img  = (med.child("img").value as Long)
+                    list.add(Medication(med.key!!, img.toInt()))
                 }
-                val adapter = MedicacaoAdapter(applicationContext, list)
+                val adapter = MedicationAdapter(applicationContext, list)
                 medListView.setAdapter(adapter)
                 medListView.setOnItemClickListener(object : AdapterView.OnItemClickListener {
                     override fun onItemClick(
@@ -44,6 +46,10 @@ class Medicacoes : AppCompatActivity() {
                                 "You Clicked at " + list.get(position).name,
                                 Toast.LENGTH_SHORT
                         ).show()
+                        val intent = Intent(applicationContext, MedicationView::class.java).apply{}
+                        val medName = list.get(position).name
+                        intent.putExtra("medName", medName)
+                        startActivity(intent)
                     }
                 })
             }
@@ -55,7 +61,7 @@ class Medicacoes : AppCompatActivity() {
     }
 
     fun startAddMedication(v: View){
-        val intent = Intent(this, AdicionarMedicacao::class.java).apply{}
+        val intent = Intent(this, AddMedication::class.java).apply{}
         startActivityForResult(intent, 0)
     }
 
@@ -75,7 +81,7 @@ class Medicacoes : AppCompatActivity() {
         AuthUI.getInstance()
                 .signOut(this)
                 .addOnCompleteListener {
-                    val intent = Intent(applicationContext, Navegacao::class.java)
+                    val intent = Intent(applicationContext, Navigation::class.java)
                     finish();
                     startActivity(intent)
                 }

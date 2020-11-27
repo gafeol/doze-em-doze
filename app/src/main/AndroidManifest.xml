@@ -9,16 +9,20 @@
         android:roundIcon="@drawable/ic_prescription"
         android:supportsRtl="true"
         android:theme="@style/Theme.DozeEmDoze">
+        <activity android:name=".MedicationView"
+            android:label="Medicação"
+            android:parentActivityName=".Medications"/>
         <activity
-            android:name=".AdicionarMedicacao"
+            android:name=".AddMedication"
             android:label="Adicionar Medicação"
-            android:parentActivityName=".Medicacoes" />
+            android:parentActivityName=".Medications"/>
         <activity
-            android:name=".Medicacoes"
-            android:label="@string/title_activity_medicacoes"
-            android:theme="@style/Theme.DozeEmDoze.NoActionBar"
-            android:parentActivityName=".Navegacao"/>
-        <activity android:name=".Navegacao"
+            android:name=".Medications"
+            android:label="@string/title_activity_medications"
+            android:parentActivityName=".Navigation"
+            android:theme="@style/Theme.DozeEmDoze.NoActionBar"/>
+        <activity
+            android:name=".Navigation"
             android:theme="@style/Theme.DozeEmDoze.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -7,10 +7,10 @@ import android.widget.EditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
-class AdicionarMedicacao : AppCompatActivity() {
+class AddMedication : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_adicionar_medicacao)
+        setContentView(R.layout.activity_add_medication)
     }
 
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid.toString()
