@@ -6,7 +6,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -41,14 +42,9 @@ class Medications : AppCompatActivity() {
                             parent: AdapterView<*>?, view: View?,
                             position: Int, id: Long
                     ) {
-                        Toast.makeText(
-                                applicationContext,
-                                "You Clicked at " + list.get(position).name,
-                                Toast.LENGTH_SHORT
-                        ).show()
                         val intent = Intent(applicationContext, MedicationView::class.java).apply{}
-                        val medName = list.get(position).name
-                        intent.putExtra("medName", medName)
+                        val medicationBundle = list.get(position).bundle()
+                        intent.putExtra("medication", medicationBundle)
                         startActivity(intent)
                     }
                 })
