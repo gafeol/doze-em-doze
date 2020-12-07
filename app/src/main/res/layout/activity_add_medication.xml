@@ -17,7 +17,8 @@
         android:id="@+id/nameEditText"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:hint="Nome" />
+        android:hint="Nome"
+        android:inputType="textShortMessage" />
 
     <Button
         android:id="@+id/saveButton"
