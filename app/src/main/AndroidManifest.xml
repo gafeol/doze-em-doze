@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gafeol.dozeemdoze">
 
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_prescription"
@@ -9,23 +11,26 @@
         android:roundIcon="@drawable/ic_prescription"
         android:supportsRtl="true"
         android:theme="@style/Theme.DozeEmDoze">
-        <activity android:name=".MedicationView"
+
+        <activity
+            android:name=".MedicationView"
             android:label="Medicação"
-            android:parentActivityName=".Medications"/>
+            android:parentActivityName=".Medications" />
         <activity
             android:name=".AddMedication"
             android:label="Adicionar Medicação"
-            android:parentActivityName=".Medications"/>
+            android:parentActivityName=".Medications" />
         <activity
             android:name=".Medications"
             android:label="@string/title_activity_medications"
             android:parentActivityName=".Navigation"
-            android:theme="@style/Theme.DozeEmDoze.NoActionBar"/>
+            android:theme="@style/Theme.DozeEmDoze.NoActionBar" />
         <activity
             android:name=".Navigation"
             android:theme="@style/Theme.DozeEmDoze.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
