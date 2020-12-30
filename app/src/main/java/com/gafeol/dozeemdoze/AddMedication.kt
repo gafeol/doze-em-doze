@@ -1,9 +1,15 @@
 package com.gafeol.dozeemdoze
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.View
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+import com.gafeol.dozeemdoze.receiver.AlarmReceiver
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -11,6 +17,7 @@ class AddMedication : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_medication)
+        setAlarm()
     }
 
     private val userUID = FirebaseAuth.getInstance().currentUser?.uid.toString()
@@ -33,5 +40,23 @@ class AddMedication : AppCompatActivity() {
             myRef.setValue(true).addOnSuccessListener { finish() }
             myRef.child("img").setValue(R.drawable.ic_pills)
         }
+    }
+
+    fun setAlarm(){
+        val context = applicationContext
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+        val pendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_NO_CREATE)
+        if (pendingIntent != null && alarmManager != null) {
+            alarmManager.cancel(pendingIntent)
+        }
+        val alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
+            PendingIntent.getBroadcast(context, 0, intent, 0)
+        }
+        alarmManager?.setRepeating(
+                AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime()  + 10 * 1000,
+                AlarmManager.INTERVAL_HALF_HOUR/30,
+                alarmIntent
+        )
     }
 }

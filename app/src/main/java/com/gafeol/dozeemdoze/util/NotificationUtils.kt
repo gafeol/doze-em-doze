@@ -5,7 +5,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
-import com.example.android.eggtimernotifications.receiver.SnoozeReceiver
 import com.gafeol.dozeemdoze.Medications
 import com.gafeol.dozeemdoze.R
 
@@ -33,12 +32,6 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         PendingIntent.FLAG_UPDATE_CURRENT
     )
     // TODO: Step 2.2 add snooze action
-    val snoozeIntent = Intent(applicationContext, SnoozeReceiver::class.java)
-    val snoozePendingIntent: PendingIntent = PendingIntent.getBroadcast(
-        applicationContext,
-        REQUEST_CODE,
-        snoozeIntent,
-        FLAGS)
 
     // TODO: Step 1.2 get an instance of NotificationCompat.Builder
     // Build the notification
@@ -60,14 +53,8 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setAutoCancel(true)
 
         // TODO: Step 2.3 add snooze action
-        .addAction(
-            R.drawable.ic_pills,
-            "Lembrar mais tarde",
-            snoozePendingIntent
-        )
 
         // TODO: Step 2.5 set priority
-        .setPriority(NotificationCompat.PRIORITY_HIGH)
     // TODO: Step 1.4 call notify
     notify(NOTIFICATION_ID, builder.build())
 }

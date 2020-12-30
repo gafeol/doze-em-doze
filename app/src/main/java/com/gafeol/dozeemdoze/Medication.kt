@@ -10,7 +10,6 @@ import android.widget.ImageView
 import android.widget.TextView
 
 class Medication(val name: String, val img: Int) {
-
     fun bundle() : Bundle {
         var bundle = Bundle()
         bundle.putString("name", name)

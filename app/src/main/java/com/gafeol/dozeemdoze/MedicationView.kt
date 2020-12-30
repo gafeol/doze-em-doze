@@ -1,7 +1,6 @@
 package com.gafeol.dozeemdoze
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -15,9 +14,5 @@ class MedicationView : AppCompatActivity() {
         titleTextView.text = med.name
         val medImageView = findViewById<ImageView>(R.id.medImageView)
         medImageView.setImageResource(med.img)
-
-        var reminder = Reminder()
-        reminder.setAlarm(applicationContext, 1)
-        Log.i("ALARM", "Alarm set")
     }
 }

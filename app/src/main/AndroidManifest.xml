@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DozeEmDoze">
 
+        <receiver
+            android:name=".receiver.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false">
+        </receiver>
+
         <activity
             android:name=".MedicationView"
             android:label="Medicação"

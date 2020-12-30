@@ -2,5 +2,5 @@
     <string name="app_name">Doze em doze</string>
     <string name="title_activity_medications">Medicações</string>
     <string name="med_notification_channel_id">med_notification</string>
-    <string name="notification_title">Hora de tomar seu remédio!</string>
+    <string name="notification_title">Hora do remédio!</string>
 </resources>
