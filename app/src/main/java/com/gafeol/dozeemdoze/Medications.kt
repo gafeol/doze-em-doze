@@ -50,9 +50,8 @@ class Medications : AppCompatActivity() {
                 val medListView = findViewById<ListView>(R.id.medListView)
                 var list = mutableListOf<Medication>()
                 for(med in snapshot.children){
-                    println(med)
-                    val img  = med.child("img")?.value as Long
-                    list.add(Medication(med.key!!, img?.toInt()))
+                    val img : Int  = med.child("img")?.value?.let { (it as Long).toInt() } ?: R.drawable.ic_broken_image
+                    list.add(Medication(med.key!!, img))
                 }
                 val adapter = MedicationAdapter(applicationContext, list)
                 medListView.setAdapter(adapter)
