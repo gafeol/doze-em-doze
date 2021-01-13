@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import androidx.appcompat.app.AppCompatDelegate
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
@@ -28,7 +29,10 @@ class Navigation : AppCompatActivity() {
     }
 
 
+    fun forceLightTheme() = AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        forceLightTheme()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
         updateAuthButtons()
