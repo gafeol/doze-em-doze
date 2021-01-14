@@ -20,11 +20,17 @@
         android:hint="Nome"
         android:inputType="textShortMessage" />
 
-    <Button
-        android:id="@+id/saveButton"
-        android:onClick="saveMedication"
+    <com.gafeol.dozeemdoze.style.TimePicker24
+        android:id="@+id/hourPicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:timePickerMode="spinner"/>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="saveMedication"
         android:text="Salvar" />
 
 </LinearLayout>
