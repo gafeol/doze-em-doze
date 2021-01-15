@@ -3,6 +3,9 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TimePicker;
 
+/*
+   Defines a custom Time Picker widget that has the 24-hour setting by default.
+ */
 public class TimePicker24 extends TimePicker {
         public TimePicker24(Context context) {
             super(context);

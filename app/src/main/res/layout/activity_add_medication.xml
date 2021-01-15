@@ -9,9 +9,35 @@
     tools:context=".AddMedication">
 
     <TextView
+        android:text="Qual o tipo de medicação?"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cadastre uma nova medicação" />
+        android:layout_height="wrap_content"/>
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <ImageButton
+                android:src="@drawable/ic_round_medicine"
+                android:scaleType="fitCenter"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+            <ImageButton
+                android:src="@drawable/ic_long_medicine"
+                android:scaleType="fitCenter"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+            <ImageButton
+                android:src="@drawable/ic_injection"
+                android:scaleType="fitCenter"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <EditText
         android:id="@+id/nameEditText"
@@ -20,8 +46,13 @@
         android:hint="Nome"
         android:inputType="textShortMessage" />
 
+    <Spinner
+        android:id="@+id/frequencySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <com.gafeol.dozeemdoze.style.TimePicker24
-        android:id="@+id/hourPicker"
+        android:id="@+id/startTimePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:timePickerMode="spinner"/>

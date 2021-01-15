@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 
-class Medication(val name: String, val img: Int) {
+class Medication(val name: String, val img: Int) { // Pensar como passar o alarme para ca
     fun bundle() : Bundle {
         var bundle = Bundle()
         bundle.putString("name", name)

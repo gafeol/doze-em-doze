@@ -4,12 +4,15 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.View
 import android.widget.EditText
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.gafeol.dozeemdoze.receiver.AlarmReceiver
+import com.gafeol.dozeemdoze.style.TimePicker24
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -31,6 +34,7 @@ class AddMedication : AppCompatActivity() {
         return true
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     fun saveMedication(view: View) {
         if(checkForm()){
             var nameEditText = findViewById<EditText>(R.id.nameEditText)
@@ -39,6 +43,9 @@ class AddMedication : AppCompatActivity() {
             val myRef = db.getReference("$userUID/medication/$medName")
             myRef.setValue(true).addOnSuccessListener { finish() }
             myRef.child("img").setValue(R.drawable.ic_pills)
+            val timePicker = findViewById<TimePicker24>(R.id.startTimePicker)
+            myRef.child("alarm/hour").setValue(timePicker.hour)
+            myRef.child("alarm/minute").setValue(timePicker.minute)
         }
     }
 
