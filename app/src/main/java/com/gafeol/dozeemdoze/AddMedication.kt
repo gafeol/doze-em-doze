@@ -10,6 +10,8 @@ import android.os.SystemClock
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
@@ -17,21 +19,38 @@ import com.gafeol.dozeemdoze.receiver.AlarmReceiver
 import com.gafeol.dozeemdoze.style.TimePicker24
 
 class AddMedication : AppCompatActivity() {
-    private var img : Int = R.drawable.ic_pills
+    private var img : Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_medication)
-        //setAlarm()
     }
 
     private fun checkForm() : Boolean {
+        var valid = true
         var nameEditText = findViewById<EditText>(R.id.nameEditText)
         if(nameEditText.text.isEmpty()){
-            nameEditText.setError("Digite o nome da medicação")
-            return false
+            nameEditText.error = "Digite o nome da medicação"
+            valid = false
         }
-        return true
+        var medicationTypeTextView = findViewById<TextView>(R.id.medicationTypeTextView)
+        if(img == -1){
+            medicationTypeTextView.error = "Escolha uma imagem"
+            valid = false
+        }
+        return valid
+    }
+
+    private fun getFrequency() : Int {
+        var frequencySpinner = findViewById<Spinner>(R.id.frequencySpinner)
+        return when (frequencySpinner.selectedItem.toString()) {
+            "Todo dia" -> 24*60
+            "12 em 12 horas" -> 12*60
+            "8 em 8 horas" -> 8*60
+            "6 em 6 horas" -> 6*60
+            "4 em 4 horas" -> 4*60
+            else -> throw Exception("Not known med frequency chosen")
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -41,7 +60,7 @@ class AddMedication : AppCompatActivity() {
             val medName = nameEditText.text.toString()
             val timePicker = findViewById<TimePicker24>(R.id.startTimePicker)
             val startMinute = timePicker.hour*60 + timePicker.minute
-            val frequency = 24*60
+            val frequency = getFrequency()
             Medication(
                 medName,
                 img,
@@ -53,9 +72,7 @@ class AddMedication : AppCompatActivity() {
         }
     }
 
-    fun deselectImages() {
-        findViewById<LinearLayout>(R.id.imgLinearLayout).children.forEach { it.isSelected = false }
-    }
+    private fun deselectImages() = findViewById<LinearLayout>(R.id.imgLinearLayout).children.forEach { it.isSelected = false }
 
     fun chooseImage(view: View) {
         deselectImages()
@@ -76,7 +93,7 @@ class AddMedication : AppCompatActivity() {
         alarmManager?.setRepeating(
                 AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime()  + 10 * 1000,
-                AlarmManager.INTERVAL_HALF_HOUR/30,
+                AlarmManager.INTERVAL_HALF_HOUR,
                 alarmIntent
         )
     }

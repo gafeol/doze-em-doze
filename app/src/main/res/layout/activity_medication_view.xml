@@ -16,6 +16,7 @@
 
         <ImageView
             android:id="@+id/medImageView"
+            android:layout_margin="10dp"
             app:layout_flexGrow="1"
             app:layout_maxWidth="80dp"
             app:layout_maxHeight="80dp"
@@ -27,13 +28,13 @@
             style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Testing some text here"
             app:layout_flexGrow="3" />
 
     </com.google.android.flexbox.FlexboxLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/editMedFab"
+        android:onClick="editMedication"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

@@ -15,18 +15,14 @@ import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.firebase.ui.auth.AuthUI
+import com.gafeol.dozeemdoze.util.getUserDBRef
 import com.gafeol.dozeemdoze.util.sendNotification
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class Medications : AppCompatActivity() {
-    private val userUID = FirebaseAuth.getInstance().currentUser?.uid.toString()
-    val dbRef = FirebaseDatabase.getInstance().getReference("$userUID/medication")
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_medications)
@@ -45,7 +41,8 @@ class Medications : AppCompatActivity() {
         ) as NotificationManager
         notificationManager.sendNotification("Chegou a hora de tomar a sua medicação!", application)
 
-        dbRef.addValueEventListener(object : ValueEventListener {
+        val medRef = getUserDBRef().child("medication")
+        medRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val medListView = findViewById<ListView>(R.id.medListView)
                 var list = mutableListOf<Medication>()
@@ -71,7 +68,7 @@ class Medications : AppCompatActivity() {
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener{ v -> startAddMedication(v)}
     }
 
-    fun startAddMedication(v: View){
+    private fun startAddMedication(v: View){
         val intent = Intent(this, AddMedication::class.java).apply{}
         startActivityForResult(intent, 0)
     }
@@ -80,8 +77,11 @@ class Medications : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 0) {
             var message = data?.getStringExtra("MESSAGE");
+            Log.d("MSG", "message from add Medication result:" + message)
         }
     }
+
+    // MENU with sign out option
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.medication_menu, menu)
@@ -97,6 +97,7 @@ class Medications : AppCompatActivity() {
                     startActivity(intent)
                 }
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.signOutItem){
             signOut()
@@ -105,6 +106,8 @@ class Medications : AppCompatActivity() {
         return false;
     }
 
+    // NOTIFICATIONS
+
     private fun createChannel(channelId: String, channelName: String) {
         // TODO: Step 1.6 START create a channel
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -112,23 +115,21 @@ class Medications : AppCompatActivity() {
                 channelId,
                 channelName,
                 // TODO: Step 2.4 change importance
-                NotificationManager.IMPORTANCE_LOW
+                NotificationManager.IMPORTANCE_HIGH
             )
             // TODO: Step 2.6 disable badges for this channel
 
             notificationChannel.enableLights(true)
             notificationChannel.lightColor = Color.RED
             notificationChannel.enableVibration(true)
-            notificationChannel.description = "Hora de tomar seus remédios!"
+            notificationChannel.description = "Canal para avisar horários de medicação"
 
             val notificationManager = this.getSystemService(
                 NotificationManager::class.java
             )
             notificationManager.createNotificationChannel(notificationChannel)
         }
-
         // TODO: Step 1.6 END create a channel
-
     }
 }
 

@@ -5,7 +5,18 @@
     <string name="notification_title">Hora do remédio!</string>
     <string-array name="frequency">
         <item>Todo dia</item>
-        <item>De 12 em 12 horas</item>
-        <item>De 8 em 8 horas</item>
+        <item>12 em 12 horas</item>
+        <item>8 em 8 horas</item>
+        <item>6 em 6 horas</item>
+        <item>4 em 4 horas</item>
     </string-array>
+    <string name="title_activity_edit_medication">EditMedication</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

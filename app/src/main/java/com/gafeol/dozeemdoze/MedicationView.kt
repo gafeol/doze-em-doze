@@ -1,8 +1,10 @@
 package com.gafeol.dozeemdoze
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MedicationView : AppCompatActivity() {
@@ -18,5 +20,9 @@ class MedicationView : AppCompatActivity() {
         val medImageView = findViewById<ImageView>(R.id.medImageView)
         medImageView.setImageResource(med.img)
         // TODO: Add views for time and frequency as well
+    }
+
+    fun editMedication(view: View) {
+        Toast.makeText(applicationContext, "Não implementado ainda", Toast.LENGTH_SHORT).show()
     }
 }
