@@ -49,10 +49,7 @@ class Medications : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val medListView = findViewById<ListView>(R.id.medListView)
                 var list = mutableListOf<Medication>()
-                for(med in snapshot.children){
-                    val img : Int  = med.child("img")?.value?.let { (it as Long).toInt() } ?: R.drawable.ic_broken_image
-                    list.add(Medication(med.key!!, img))
-                }
+                snapshot.children.forEach{snap -> list.add(medFromSnapshot(snap))}
                 val adapter = MedicationAdapter(applicationContext, list)
                 medListView.setAdapter(adapter)
                 medListView.setOnItemClickListener(object : AdapterView.OnItemClickListener {

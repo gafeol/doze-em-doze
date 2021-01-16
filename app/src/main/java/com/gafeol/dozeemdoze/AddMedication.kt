@@ -13,8 +13,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.gafeol.dozeemdoze.receiver.AlarmReceiver
 import com.gafeol.dozeemdoze.style.TimePicker24
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 
 class AddMedication : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,8 +20,6 @@ class AddMedication : AppCompatActivity() {
         setContentView(R.layout.activity_add_medication)
         setAlarm()
     }
-
-    private val userUID = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
     private fun checkForm() : Boolean {
         var nameEditText = findViewById<EditText>(R.id.nameEditText)
@@ -38,18 +34,23 @@ class AddMedication : AppCompatActivity() {
     fun saveMedication(view: View) {
         if(checkForm()){
             var nameEditText = findViewById<EditText>(R.id.nameEditText)
-            val db = FirebaseDatabase.getInstance()
             val medName = nameEditText.text.toString()
-            val myRef = db.getReference("$userUID/medication/$medName")
-            myRef.setValue(true).addOnSuccessListener { finish() }
-            myRef.child("img").setValue(R.drawable.ic_pills)
+            val img = R.drawable.ic_pills // TODO: Escolher imagem baseado na imagem clicada
             val timePicker = findViewById<TimePicker24>(R.id.startTimePicker)
-            myRef.child("alarm/hour").setValue(timePicker.hour)
-            myRef.child("alarm/minute").setValue(timePicker.minute)
+            val startMinute = timePicker.hour*60 + timePicker.minute
+            val frequency = 24*60
+            Medication(
+                medName,
+                img,
+                //dosage,
+                //medicineType,
+                startMinute,
+                frequency
+            ).save()
         }
     }
 
-    fun setAlarm(){
+    private fun setAlarm(){
         val context = applicationContext
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
         val pendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_NO_CREATE)
