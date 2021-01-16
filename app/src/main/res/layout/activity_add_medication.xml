@@ -16,23 +16,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
+            android:id="@+id/imgLinearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal">
             <ImageButton
                 android:src="@drawable/ic_round_medicine"
+                android:tag="ic_round_medicine"
+                android:onClick="chooseImage"
                 android:scaleType="fitCenter"
+                android:background="@drawable/border_selector"
                 android:layout_width="50dp"
                 android:layout_height="50dp"/>
             <ImageButton
                 android:src="@drawable/ic_long_medicine"
+                android:tag="ic_long_medicine"
+                android:onClick="chooseImage"
                 android:scaleType="fitCenter"
+                android:background="@drawable/border_selector"
                 android:layout_width="50dp"
                 android:layout_height="50dp"/>
             <ImageButton
                 android:src="@drawable/ic_injection"
+                android:tag="ic_injection"
+                android:onClick="chooseImage"
                 android:scaleType="fitCenter"
+                android:background="@drawable/border_selector"
                 android:layout_width="50dp"
                 android:layout_height="50dp"/>
 

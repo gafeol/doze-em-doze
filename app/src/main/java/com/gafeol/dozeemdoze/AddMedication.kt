@@ -9,16 +9,20 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.view.View
 import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.children
 import com.gafeol.dozeemdoze.receiver.AlarmReceiver
 import com.gafeol.dozeemdoze.style.TimePicker24
 
 class AddMedication : AppCompatActivity() {
+    private var img : Int = R.drawable.ic_pills
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_medication)
-        setAlarm()
+        //setAlarm()
     }
 
     private fun checkForm() : Boolean {
@@ -35,7 +39,6 @@ class AddMedication : AppCompatActivity() {
         if(checkForm()){
             var nameEditText = findViewById<EditText>(R.id.nameEditText)
             val medName = nameEditText.text.toString()
-            val img = R.drawable.ic_pills // TODO: Escolher imagem baseado na imagem clicada
             val timePicker = findViewById<TimePicker24>(R.id.startTimePicker)
             val startMinute = timePicker.hour*60 + timePicker.minute
             val frequency = 24*60
@@ -48,6 +51,16 @@ class AddMedication : AppCompatActivity() {
                 frequency
             ).save()
         }
+    }
+
+    fun deselectImages() {
+        findViewById<LinearLayout>(R.id.imgLinearLayout).children.forEach { it.isSelected = false }
+    }
+
+    fun chooseImage(view: View) {
+        deselectImages()
+        view.isSelected = true
+        img = resources.getIdentifier(view.tag.toString(), "drawable", packageName)
     }
 
     private fun setAlarm(){
