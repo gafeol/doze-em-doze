@@ -38,6 +38,11 @@ class Medication(val name: String,
         medRef.child("alarm/time").setValue(startingTime)
         medRef.child("alarm/frequency").setValue(frequency)
     }
+
+    fun delete() {
+        val medRef = getUserDBRef().child("medication/$name")
+        medRef.removeValue()
+    }
 }
 
 fun medFromSnapshot(snap: DataSnapshot): Medication {

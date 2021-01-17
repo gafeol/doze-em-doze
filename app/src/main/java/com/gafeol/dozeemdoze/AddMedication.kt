@@ -17,9 +17,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import com.gafeol.dozeemdoze.receiver.AlarmReceiver
 import com.gafeol.dozeemdoze.style.TimePicker24
+import com.google.firebase.analytics.FirebaseAnalytics
 
 class AddMedication : AppCompatActivity() {
     private var img : Int = -1
+    private lateinit var  mFirebaseAnalytics : FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,14 +63,19 @@ class AddMedication : AppCompatActivity() {
             val timePicker = findViewById<TimePicker24>(R.id.startTimePicker)
             val startMinute = timePicker.hour*60 + timePicker.minute
             val frequency = getFrequency()
-            Medication(
+            val med = Medication(
                 medName,
                 img,
                 //dosage,
                 //medicineType,
                 startMinute,
                 frequency
-            ).save()
+            )
+            med.save()
+            val medBundle = med.bundle()
+            medBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "medication")
+            medBundle.putString(FirebaseAnalytics.Param.ITEM_NAME, medName)
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, medBundle)
         }
     }
 

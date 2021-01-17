@@ -28,7 +28,6 @@ class Medications : AppCompatActivity() {
         setContentView(R.layout.activity_medications)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-
         createChannel(
             getString(R.string.med_notification_channel_id),
             "Meds"
@@ -84,7 +83,7 @@ class Medications : AppCompatActivity() {
     // MENU with sign out option
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.medication_menu, menu)
+        menuInflater.inflate(R.menu.medications_menu, menu)
         return true
     }
 
