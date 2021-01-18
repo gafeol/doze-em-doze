@@ -38,11 +38,12 @@ class AddMedication : AppCompatActivity() {
     private fun getFrequency() : Int {
         var frequencySpinner = findViewById<Spinner>(R.id.frequencySpinner)
         return when (frequencySpinner.selectedItem.toString()) {
-            "Todo dia" -> 24*60
-            "12 em 12 horas" -> 12*60
-            "8 em 8 horas" -> 8*60
-            "6 em 6 horas" -> 6*60
-            "4 em 4 horas" -> 4*60
+            "Todo dia" -> 24 * 60
+            "12 em 12 horas" -> 12 * 60
+            "8 em 8 horas" -> 8 * 60
+            "6 em 6 horas" -> 6 * 60
+            "4 em 4 horas" -> 4 * 60
+            "1 em 1 minuto" -> 1
             else -> throw Exception("Not known med frequency chosen")
         }
     }
@@ -71,6 +72,7 @@ class AddMedication : AppCompatActivity() {
             medBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "medication")
             medBundle.putString(FirebaseAnalytics.Param.ITEM_NAME, medName)
             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, medBundle)
+            finish()
         }
     }
 
