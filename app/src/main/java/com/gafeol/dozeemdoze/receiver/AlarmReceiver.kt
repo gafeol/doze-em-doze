@@ -20,26 +20,20 @@ import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.gafeol.dozeemdoze.util.sendNotification
 
 class AlarmReceiver: BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        // TODO: Step 1.10 [Optional] remove toast
-        Toast.makeText(context, "TOMA o remedio ai", Toast.LENGTH_SHORT).show()
-        Log.d("ALRM", "Ativou o alarme para tomar o remedio!")
-
-        // TODO: Step 1.9 add call to sendNotification
         val notificationManager = ContextCompat.getSystemService(
                 context,
                 NotificationManager::class.java
         ) as NotificationManager
 
+        val medName = intent.getStringExtra("medName") ?: "SEMNOME"
         notificationManager.sendNotification(
-                "Hora de tomar seu remédio!",
+                "Hora de tomar $medName!",
                 context
         )
     }

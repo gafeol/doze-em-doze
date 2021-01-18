@@ -1,21 +1,12 @@
 package com.gafeol.dozeemdoze
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.View
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
-import com.gafeol.dozeemdoze.receiver.AlarmReceiver
 import com.gafeol.dozeemdoze.style.TimePicker24
 import com.google.firebase.analytics.FirebaseAnalytics
 
@@ -26,6 +17,7 @@ class AddMedication : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_medication)
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
     }
 
     private fun checkForm() : Boolean {
@@ -72,6 +64,9 @@ class AddMedication : AppCompatActivity() {
                 frequency
             )
             med.save()
+            med.setAlarm(applicationContext, intent)
+            val minutesToAlarm = med.nextAlarmTime()
+            Toast.makeText(applicationContext, "Alarme tocará em ${minutesToAlarm/60} horas e ${minutesToAlarm%60} minutos, repetindo a cada ${frequency/60} horas", Toast.LENGTH_SHORT).show()
             val medBundle = med.bundle()
             medBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "medication")
             medBundle.putString(FirebaseAnalytics.Param.ITEM_NAME, medName)
@@ -85,23 +80,5 @@ class AddMedication : AppCompatActivity() {
         deselectImages()
         view.isSelected = true
         img = resources.getIdentifier(view.tag.toString(), "drawable", packageName)
-    }
-
-    private fun setAlarm(){
-        val context = applicationContext
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
-        val pendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_NO_CREATE)
-        if (pendingIntent != null && alarmManager != null) {
-            alarmManager.cancel(pendingIntent)
-        }
-        val alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
-            PendingIntent.getBroadcast(context, 0, intent, 0)
-        }
-        alarmManager?.setRepeating(
-                AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime()  + 10 * 1000,
-                AlarmManager.INTERVAL_HALF_HOUR,
-                alarmIntent
-        )
     }
 }

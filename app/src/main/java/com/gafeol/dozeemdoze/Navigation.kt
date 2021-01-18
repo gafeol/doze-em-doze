@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 class Navigation : AppCompatActivity() {
     private val RC_SIGN_IN: Int = 123
 
-    private lateinit var mFirebaseAnalytics: FirebaseAnalytics;
+    private lateinit var mFirebaseAnalytics: FirebaseAnalytics
 
     private fun updateAuthButtons() {
         var signInButton = findViewById<Button>(R.id.signInButton)
@@ -39,7 +39,7 @@ class Navigation : AppCompatActivity() {
         forceLightTheme()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         updateAuthButtons()
     }
 

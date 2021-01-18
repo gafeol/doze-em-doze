@@ -13,10 +13,8 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.firebase.ui.auth.AuthUI
 import com.gafeol.dozeemdoze.util.getUserDBRef
-import com.gafeol.dozeemdoze.util.sendNotification
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -30,35 +28,25 @@ class Medications : AppCompatActivity() {
 
         createChannel(
             getString(R.string.med_notification_channel_id),
-            "Meds"
+            getString(R.string.med_notification_channel_name)
         )
 
-        // TODO: Step 1.5 get an instance of NotificationManager and call sendNotification
-        val notificationManager = ContextCompat.getSystemService(
-            application,
-            NotificationManager::class.java
-        ) as NotificationManager
-        notificationManager.sendNotification("Chegou a hora de tomar a sua medicação!", application)
-
+        // Renders med list
         val medRef = getUserDBRef().child("medication")
         medRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val medListView = findViewById<ListView>(R.id.medListView)
-                var list = mutableListOf<Medication>()
-                snapshot.children.forEach{snap -> list.add(medFromSnapshot(snap))}
-                val adapter = MedicationAdapter(applicationContext, list)
-                medListView.setAdapter(adapter)
-                medListView.setOnItemClickListener(object : AdapterView.OnItemClickListener {
-                    override fun onItemClick(
-                            parent: AdapterView<*>?, view: View?,
-                            position: Int, id: Long
-                    ) {
-                        val intent = Intent(applicationContext, MedicationView::class.java).apply{}
-                        val medicationBundle = list.get(position).bundle()
-                        intent.putExtra("medication", medicationBundle)
-                        startActivity(intent)
-                    }
-                })
+                var medList = mutableListOf<Medication>()
+                snapshot.children.forEach{snap -> medList.add(medFromSnapshot(snap))}
+                val adapter = MedicationAdapter(applicationContext, medList)
+                medListView.adapter = adapter
+                medListView.onItemClickListener = AdapterView.OnItemClickListener {
+                    parent, view, position, id ->
+                    val intent = Intent(applicationContext, MedicationView::class.java).apply{}
+                    val medicationBundle = medList[position].bundle()
+                    intent.putExtra("medication", medicationBundle)
+                    startActivity(intent)
+                }
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.d("FIREBASE", "Cancelled meds search")
@@ -108,15 +96,12 @@ class Medications : AppCompatActivity() {
     // NOTIFICATIONS
 
     private fun createChannel(channelId: String, channelName: String) {
-        // TODO: Step 1.6 START create a channel
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
                 channelId,
                 channelName,
-                // TODO: Step 2.4 change importance
                 NotificationManager.IMPORTANCE_HIGH
             )
-            // TODO: Step 2.6 disable badges for this channel
 
             notificationChannel.enableLights(true)
             notificationChannel.lightColor = Color.RED
@@ -128,7 +113,6 @@ class Medications : AppCompatActivity() {
             )
             notificationManager.createNotificationChannel(notificationChannel)
         }
-        // TODO: Step 1.6 END create a channel
     }
 }
 
