@@ -12,6 +12,14 @@ import androidx.appcompat.app.AppCompatActivity
 class MedicationView : AppCompatActivity() {
     private var med = Medication("Nenhuma medicação selecionada!", R.drawable.ic_pills, 0, 24*60)
 
+    fun formatTime(minutes: Int): String {
+        val hour = minutes/60
+        val min = minutes%60
+        val hourString = if (hour < 10) "0$hour" else "$hour"
+        val minString = if(min < 10) "0$min" else "$min"
+        return hourString + ":" + minString
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_medication_view)
@@ -22,7 +30,7 @@ class MedicationView : AppCompatActivity() {
         medImageView.setImageResource(med.img)
 
         val timeTextView = findViewById<TextView>(R.id.startTimeTextView)
-        timeTextView.text = "Alarmes começam às " + (med.startingTime/60).toString() + ":" + (med.startingTime%60).toString()
+        timeTextView.text = "Alarmes começam às " + formatTime(med.startingTime)
         val frequencyTextView = findViewById<TextView>(R.id.frequencyTextView)
         frequencyTextView.text = "Repete a cada " + (med.frequency/60).toString() + " horas"
     }
