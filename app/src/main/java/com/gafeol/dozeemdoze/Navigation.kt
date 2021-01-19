@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
@@ -13,6 +12,7 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_navigation.*
 
 class Navigation : AppCompatActivity() {
     private val RC_SIGN_IN: Int = 123
@@ -20,8 +20,6 @@ class Navigation : AppCompatActivity() {
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
 
     private fun updateAuthButtons() {
-        var signInButton = findViewById<Button>(R.id.signInButton)
-
         val user = FirebaseAuth.getInstance().currentUser
         if(user != null) {
             signInButton.visibility = View.GONE
@@ -69,8 +67,8 @@ class Navigation : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 // Successfully signed in
                 val user = FirebaseAuth.getInstance().currentUser
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundleOf())
-                Log.i("SIGN", "Success on sign in")
+                // TODO: testar log de login
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundleOf(Pair("name", user!!.displayName), Pair("email", user!!.email)))
                 updateAuthButtons()
             } else {
                 // Sign in failed. If response is null the user canceled the

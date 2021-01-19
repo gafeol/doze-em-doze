@@ -16,6 +16,7 @@ import android.widget.TextView
 import com.gafeol.dozeemdoze.receiver.AlarmReceiver
 import com.gafeol.dozeemdoze.util.getUserDBRef
 import com.google.firebase.database.DataSnapshot
+import kotlinx.android.synthetic.main.row_medication.view.*
 import java.util.*
 
 class Medication(val name: String,
@@ -26,7 +27,7 @@ class Medication(val name: String,
                  val frequency : Int) { // Specified on minutes
 
     fun bundle() : Bundle {
-        var bundle = Bundle()
+        val bundle = Bundle()
         bundle.putString("name", name)
         bundle.putInt("img", img)
         //bundle.putDouble("dosage", dosage)
@@ -69,9 +70,9 @@ class Medication(val name: String,
         if (pendingIntent != null && alarmManager != null) {
             alarmManager.cancel(pendingIntent)
         }
-        val alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
-            intent.putExtra("medName", name)
-            PendingIntent.getBroadcast(context, 0, intent, 0)
+        val alarmIntent = Intent(context, AlarmReceiver::class.java).let { alarmIntent ->
+            alarmIntent.putExtra("medName", name)
+            PendingIntent.getBroadcast(context, 0, alarmIntent, 0)
         }
 
         alarmManager?.setRepeating(
@@ -86,9 +87,9 @@ class Medication(val name: String,
 
 fun medFromSnapshot(snap: DataSnapshot): Medication {
     Log.d("MED", "medFromSnapshot : ${snap.key}")
-    val img : Int  = snap.child("img")?.value?.let { (it as Long).toInt() } ?: R.drawable.ic_broken_image
-    val startingTime = snap.child("alarm/time")!!.value as Long
-    val frequency = snap.child("alarm/frequency")!!.value as Long
+    val img : Int  = snap.child("img").value?.let { (it as Long).toInt() } ?: R.drawable.ic_broken_image
+    val startingTime = snap.child("alarm/time").value as Long
+    val frequency = snap.child("alarm/frequency").value as Long
     return Medication(
         snap.key!!,
         img,
@@ -101,11 +102,11 @@ fun medFromSnapshot(snap: DataSnapshot): Medication {
 fun Bundle.unbundledMedication() : Medication {
     return Medication(
             this.getString("name")!!,
-            this.getInt("img")!!,
+            this.getInt("img"),
             //this.getDouble("dosage")!!,
             //this.getString("type")!!,
-            this.getInt("startingTime")!!,
-            this.getInt("frequency")!!
+            this.getInt("startingTime"),
+            this.getInt("frequency")
     )
 }
 
@@ -115,13 +116,13 @@ class MedicationAdapter(context: Context, medList: List<Medication>)
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val med = getItem(position)!!
         var holder = ViewHolder()
-        var retView: View
+        val retView: View
 
         if(convertView == null){
             val inflater = LayoutInflater.from(context);
             retView = inflater.inflate(R.layout.row_medication, parent, false);
-            holder.name = retView.findViewById(R.id.medTitleTextView)
-            holder.img = retView.findViewById(R.id.medImageView)
+            holder.name = retView.medTitleTextView
+            holder.img = retView.medImageView
             retView.tag = holder
         } else {
             retView = convertView

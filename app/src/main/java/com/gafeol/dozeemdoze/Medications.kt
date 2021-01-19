@@ -11,7 +11,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.firebase.ui.auth.AuthUI
@@ -19,6 +18,7 @@ import com.gafeol.dozeemdoze.util.getUserDBRef
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.activity_medications.*
 
 class Medications : AppCompatActivity() {
     fun forceLightTheme() = AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -29,7 +29,7 @@ class Medications : AppCompatActivity() {
         forceLightTheme()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_medications)
-        setSupportActionBar(findViewById(R.id.toolbar))
+        setSupportActionBar(toolbar)
 
         createChannel(
             getString(R.string.med_notification_channel_id),
@@ -40,7 +40,6 @@ class Medications : AppCompatActivity() {
         val medRef = getUserDBRef().child("medication")
         medEventListener = (object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val medListView = findViewById<ListView>(R.id.medListView)
                 var medList = mutableListOf<Medication>()
                 snapshot.children.forEach{snap -> medList.add(medFromSnapshot(snap))}
                 val adapter = MedicationAdapter(applicationContext, medList)

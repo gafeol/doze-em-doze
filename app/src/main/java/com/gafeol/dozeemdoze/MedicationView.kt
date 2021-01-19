@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.gafeol.dozeemdoze.util.formatTime
+import kotlinx.android.synthetic.main.activity_medication_view.*
 
 class MedicationView : AppCompatActivity() {
     private var med = Medication("Nenhuma medicação selecionada!", R.drawable.ic_pills, 0, 24*60)
@@ -17,15 +16,10 @@ class MedicationView : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_medication_view)
         intent.getBundleExtra("medication")?.let { med = it.unbundledMedication() }
-        val titleTextView = findViewById<TextView>(R.id.titleTextView)
         titleTextView.text = med.name
-        val medImageView = findViewById<ImageView>(R.id.medImageView)
         medImageView.setImageResource(med.img)
-
-        val timeTextView = findViewById<TextView>(R.id.startTimeTextView)
-        timeTextView.text = "Alarmes começam às " + formatTime(med.startingTime)
-        val frequencyTextView = findViewById<TextView>(R.id.frequencyTextView)
-        frequencyTextView.text = "Repete a cada " + (med.frequency/60).toString() + " horas"
+        startTimeTextView.text = "Alarmes começam às ${formatTime(med.startingTime)}"
+        frequencyTextView.text = "Repete a cada ${med.frequency/60} horas"
     }
 
     fun editMedication(view: View) {
@@ -42,9 +36,9 @@ class MedicationView : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.deleteItem){
             deleteMedication()
-            return true;
+            return true
         }
-        return false;
+        return false
     }
 
     private fun deleteMedication() {

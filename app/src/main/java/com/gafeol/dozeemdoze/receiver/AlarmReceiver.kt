@@ -36,7 +36,7 @@ class AlarmReceiver: BroadcastReceiver() {
         ) as NotificationManager
 
         val medName = intent.getStringExtra("medName") ?: "SEMNOME"
-        val alarm = getUserDBRef().child("alarme").addListenerForSingleValueEvent(object: ValueEventListener{
+        getUserDBRef().child("alarme").addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 notificationManager.sendNotification(
                     //"Hora de tomar $medName!",
@@ -45,11 +45,9 @@ class AlarmReceiver: BroadcastReceiver() {
                 )
 
             }
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
         })
     }
 
