@@ -7,100 +7,114 @@
     android:padding="5dp"
     tools:context=".AddMedication">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        android:padding="5dp">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingVertical="15dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/saveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/nameEditText"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
-            android:hint="Nome do remédio"
-            android:inputType="textShortMessage" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="5dp"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/medicationTypeTextView"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="2dp"
-            android:text="Qual o tipo de medicação?"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <HorizontalScrollView
-            android:layout_marginBottom="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/nameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:hint="Nome do remédio"
+                android:inputType="textShortMessage" />
 
-            <LinearLayout
-                android:id="@+id/imgLinearLayout"
+            <TextView
+                android:id="@+id/medicationTypeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
-                <ImageButton
-                    android:src="@drawable/ic_round_medicine"
-                    android:tag="ic_round_medicine"
-                    android:onClick="chooseImage"
-                    android:scaleType="fitCenter"
-                    android:background="@drawable/border_selector"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"/>
-                <ImageButton
-                    android:src="@drawable/ic_long_medicine"
-                    android:tag="ic_long_medicine"
-                    android:onClick="chooseImage"
-                    android:scaleType="fitCenter"
-                    android:background="@drawable/border_selector"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"/>
-                <ImageButton
-                    android:src="@drawable/ic_injection"
-                    android:tag="ic_injection"
-                    android:onClick="chooseImage"
-                    android:scaleType="fitCenter"
-                    android:background="@drawable/border_selector"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"/>
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="2dp"
+                android:text="Qual o tipo de medicação?"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
-            </LinearLayout>
-        </HorizontalScrollView>
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Horário de início do alarme"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
+                <LinearLayout
+                    android:id="@+id/imgLinearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
 
-        <com.gafeol.dozeemdoze.style.TimePicker24
-            android:id="@+id/startTimePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:timePickerMode="spinner"/>
+                    <ImageButton
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:background="@drawable/border_selector"
+                        android:onClick="chooseImage"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_round_medicine"
+                        android:tag="ic_round_medicine" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            android:text="Frequência da medicação"/>
+                    <ImageButton
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:background="@drawable/border_selector"
+                        android:onClick="chooseImage"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_long_medicine"
+                        android:tag="ic_long_medicine" />
 
-        <Spinner
-            android:id="@+id/frequencySpinner"
-            android:entries="@array/frequency"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+                    <ImageButton
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:background="@drawable/border_selector"
+                        android:onClick="chooseImage"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_injection"
+                        android:tag="ic_injection" />
 
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Horário de início do alarme"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+            <com.gafeol.dozeemdoze.style.TimePicker24
+                android:id="@+id/startTimePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:timePickerMode="spinner" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Frequência da medicação"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+            <Spinner
+                android:id="@+id/frequencySpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/frequency" />
+        </LinearLayout>
+    </ScrollView>
     <Button
         android:id="@+id/saveButton"
         android:layout_width="match_parent"
