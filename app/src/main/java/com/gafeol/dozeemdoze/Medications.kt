@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.firebase.ui.auth.AuthUI
 import com.gafeol.dozeemdoze.util.getUserDBRef
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -59,39 +58,10 @@ class Medications : AppCompatActivity() {
             }
         })
         medRef.addValueEventListener(medEventListener)
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener{ v -> startAddMedication(v)}
     }
 
-    override fun onResume() {
-        super.onResume()
-        // Renders med list
-        val medRef = getUserDBRef().child("medication")
-        medEventListener = (object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val medListView = findViewById<ListView>(R.id.medListView)
-                var medList = mutableListOf<Medication>()
-                snapshot.children.forEach{snap -> medList.add(medFromSnapshot(snap))}
-                val adapter = MedicationAdapter(applicationContext, medList)
-                medListView.adapter = adapter
-                medListView.onItemClickListener = AdapterView.OnItemClickListener {
-                    parent, view, position, id ->
-                    val intent = Intent(applicationContext, MedicationView::class.java).apply{}
-                    val medicationBundle = medList[position].bundle()
-                    intent.putExtra("medication", medicationBundle)
-                    startActivity(intent)
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("FIREBASE", "Cancelled meds search")
-            }
-        })
-        medRef.addValueEventListener(medEventListener)
-    }
-
-    private fun startAddMedication(v: View){
+    fun startAddMedication(v: View){
         val intent = Intent(this, AddMedication::class.java).apply{}
-        val medRef = getUserDBRef().child("medication")
-        medRef.removeEventListener(medEventListener)
         startActivity(intent)
     }
 
@@ -113,11 +83,18 @@ class Medications : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.signOutItem){
-            signOut()
-            return true;
+        return when (item.itemId) {
+            R.id.signOutItem -> {
+                signOut()
+                true
+            }
+            R.id.addDependent -> {
+                val addDepIntent = Intent(applicationContext, AddDependant::class.java).apply {}
+                startActivity(addDepIntent)
+                true
+            }
+            else -> false
         }
-        return false;
     }
 
     // NOTIFICATIONS

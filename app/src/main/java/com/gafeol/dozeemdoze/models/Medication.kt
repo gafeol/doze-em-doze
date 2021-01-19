@@ -39,11 +39,14 @@ class Medication(val name: String,
     // Save medicine to firebase
     fun save() {
         val medRef = getUserDBRef().child("medication/$name")
-        medRef.child("img").setValue(img)
+        val singleUpdate = hashMapOf<String, Any>(
+            "img" to img,
+            "alarm/time" to startingTime,
+            "alarm/frequency" to frequency
+        )
+        medRef.updateChildren(singleUpdate)
         //myRef.child("dosage").setValue(dosage)
         //myRef.child("type").setValue(type)
-        medRef.child("alarm/time").setValue(startingTime)
-        medRef.child("alarm/frequency").setValue(frequency)
     }
 
     fun delete() {
