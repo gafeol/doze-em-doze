@@ -5,11 +5,10 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 fun getUserDBRef(): DatabaseReference {
-    val userUID = FirebaseAuth.getInstance().currentUser?.let {
-        val uid = it.uid.toString()
+    FirebaseAuth.getInstance().currentUser?.let {
+        val uid = it.uid
         val db = FirebaseDatabase.getInstance()
-        val myRef = db.getReference("$uid")
-        return myRef
+        return db.getReference(uid)
     }
     throw Exception("User not authenticated to perform this action!")
 }

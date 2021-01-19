@@ -61,6 +61,7 @@ class Medication(val name: String,
         var nextAlarmTime = startingTime - minutesToday
         if(nextAlarmTime < 0)
             nextAlarmTime += 24 * 60
+        nextAlarmTime = nextAlarmTime%frequency
         return nextAlarmTime
     }
 

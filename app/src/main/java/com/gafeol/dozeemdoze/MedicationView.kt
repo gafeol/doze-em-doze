@@ -6,7 +6,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.gafeol.dozeemdoze.util.formatTime
 import kotlinx.android.synthetic.main.activity_medication_view.*
 
 class MedicationView : AppCompatActivity() {
@@ -18,8 +17,29 @@ class MedicationView : AppCompatActivity() {
         intent.getBundleExtra("medication")?.let { med = it.unbundledMedication() }
         titleTextView.text = med.name
         medImageView.setImageResource(med.img)
-        startTimeTextView.text = "Alarmes começam às ${formatTime(med.startingTime)}"
+
+        startTimeTextView.text = nextAlarmMessage()
         frequencyTextView.text = "Repete a cada ${med.frequency/60} horas"
+    }
+
+    private fun nextAlarmMessage() : String {
+        val nextAlarmIn = med.nextAlarmTime()
+        val hours = nextAlarmIn/60
+        val hourNoun = "hora" + if(hours > 1) "s" else ""
+        val min = nextAlarmIn%60
+        val minNoun = "minuto" + if(min > 1) "s" else ""
+        if(hours > 0){
+            if(min > 0)
+                return "Próxima dose em $hours $hourNoun e $min $minNoun"
+            else
+                return "Próxima dose em $hours $hourNoun"
+        }
+        else {
+            if(min > 0)
+                return "Próxima dose em $min $minNoun"
+            else
+                return "Tomar sua dose agora"
+        }
     }
 
     fun editMedication(view: View) {

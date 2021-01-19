@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
+import com.gafeol.dozeemdoze.util.isAuth
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_navigation.*
@@ -20,8 +21,7 @@ class Navigation : AppCompatActivity() {
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
 
     private fun updateAuthButtons() {
-        val user = FirebaseAuth.getInstance().currentUser
-        if(user != null) {
+        if(isAuth()) {
             signInButton.visibility = View.GONE
             startMedications()
         }
@@ -30,8 +30,7 @@ class Navigation : AppCompatActivity() {
         }
     }
 
-
-    fun forceLightTheme() = AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+    private fun forceLightTheme() = AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         forceLightTheme()
