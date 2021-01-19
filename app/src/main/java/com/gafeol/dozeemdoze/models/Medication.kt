@@ -37,6 +37,25 @@ class Medication(val name: String,
         return bundle
     }
 
+    fun alarmHash() : MutableMap<String, Any> {
+        var map = mutableMapOf<String, Any>()
+
+        if(frequency == 1){ // DEBUG
+            for (i in 0..10) {
+                val subMap = mutableMapOf<String, Any>(Pair(name, true))
+                map.put((startingTime + i).toString(), subMap)
+            }
+            return map
+        }
+        var ini = startingTime%frequency
+        while(ini < 24*60){
+            val subMap = mutableMapOf<String, Any>(Pair(name, true))
+            map.put(ini.toString(), subMap)
+            ini += frequency
+        }
+        return map
+    }
+
     // Save medicine to firebase
     fun save() {
         val medRef = getUserDBRef().child("medication/$name")
@@ -46,6 +65,8 @@ class Medication(val name: String,
             "alarm/frequency" to frequency
         )
         medRef.updateChildren(singleUpdate)
+        val alarmRef = getUserDBRef().child("alarms")
+        alarmRef.updateChildren(alarmHash())
         //myRef.child("dosage").setValue(dosage)
         //myRef.child("type").setValue(type)
     }
