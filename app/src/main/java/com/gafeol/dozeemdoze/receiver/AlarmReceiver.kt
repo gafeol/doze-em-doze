@@ -21,7 +21,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.ContextCompat
+import com.gafeol.dozeemdoze.util.getUserDBRef
 import com.gafeol.dozeemdoze.util.sendNotification
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 
 class AlarmReceiver: BroadcastReceiver() {
 
@@ -32,10 +36,21 @@ class AlarmReceiver: BroadcastReceiver() {
         ) as NotificationManager
 
         val medName = intent.getStringExtra("medName") ?: "SEMNOME"
-        notificationManager.sendNotification(
-                "Hora de tomar $medName!",
-                context
-        )
+        val alarm = getUserDBRef().child("alarme").addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                notificationManager.sendNotification(
+                    //"Hora de tomar $medName!",
+                    snapshot.value as String,
+                    context
+                )
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
 }
