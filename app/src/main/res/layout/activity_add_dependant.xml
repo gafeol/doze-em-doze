@@ -123,31 +123,6 @@
                             android:tag="ic_old_woman_2" />
                     </LinearLayout>
                 </HorizontalScrollView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Horário de início do alarme"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
-
-                <com.gafeol.dozeemdoze.style.TimePicker24
-                    android:id="@+id/startTimePicker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:timePickerMode="spinner" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Frequência da medicação"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
-
-                <Spinner
-                    android:id="@+id/frequencySpinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/frequency" />
             </LinearLayout>
         </ScrollView>
         <Button

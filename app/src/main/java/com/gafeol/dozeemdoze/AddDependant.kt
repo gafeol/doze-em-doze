@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
+import com.gafeol.dozeemdoze.models.Dependant
+import com.gafeol.dozeemdoze.util.getUserDBRef
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_add_dependant.*
 
@@ -39,10 +41,24 @@ class AddDependant : AppCompatActivity() {
         img = resources.getIdentifier(view.tag.toString(), "drawable", packageName)
     }
 
+    fun getDependant() : Dependant {
+        return Dependant(
+                nameEditText.text.toString(),
+                emailEditText.text.toString(),
+                img
+        )
+    }
 
     fun saveDependant(view: View) {
         if(checkForm()){
-            // TODO: save to firebase
+            val dep = getDependant()
+            val depRef = getUserDBRef().child("dependants/${dep.name}")
+            val depData = hashMapOf(
+                    "email" to (dep.email ?: ""),
+                    "img" to dep.img
+            )
+            depRef.setValue(depData)
+            finish()
         }
     }
 }
