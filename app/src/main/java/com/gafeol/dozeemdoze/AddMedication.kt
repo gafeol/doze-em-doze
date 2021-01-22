@@ -3,21 +3,65 @@ package com.gafeol.dozeemdoze
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
+import com.gafeol.dozeemdoze.util.getUserDBRef
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_add_medication.*
 
 class AddMedication : AppCompatActivity() {
     private var img : Int = -1
+    private var dependant : String? = null
     private lateinit var  mFirebaseAnalytics : FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_medication)
+        setPatientViews()
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+    }
+
+    private fun setPatientViews() {
+        getUserDBRef().child("dependants").addListenerForSingleValueEvent(object :
+            ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val dependantList = mutableListOf<String>("Você mesmo")
+                if(snapshot.exists() && snapshot.hasChildren()){
+                    snapshot.children.forEach{dependantSnap ->
+                        dependantList.add(dependantSnap.key.toString())
+                    }
+                    val arrayAdapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, dependantList);
+                    patientSpinner.adapter = arrayAdapter
+                    patientSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(
+                            p0: AdapterView<*>?,
+                            p1: View?,
+                            p2: Int,
+                            p3: Long
+                        ) {
+                            dependant = if(p2 > 0) dependantList[p2] else null
+                        }
+
+                        override fun onNothingSelected(p0: AdapterView<*>?) {
+                            TODO("Not yet implemented")
+                        }
+
+                    }
+                    patientTextView.visibility = View.VISIBLE
+                    patientSpinner.visibility = View.VISIBLE
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     private fun checkForm() : Boolean {
@@ -57,11 +101,12 @@ class AddMedication : AppCompatActivity() {
                 //dosage,
                 //medicineType,
                 startMinute,
-                frequency
+                frequency,
+                dependant
             )
             med.save()
             med.setAlarm(applicationContext, intent)
-            val minutesToAlarm = med.nextAlarmTime()
+            val minutesToAlarm = med.minutesToAlarm()
             Toast.makeText(applicationContext, "Alarme tocará em ${minutesToAlarm/60} horas e ${minutesToAlarm%60} minutos, repetindo a cada ${frequency/60} horas", Toast.LENGTH_SHORT).show()
             val medBundle = med.bundle()
             medBundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "medication")

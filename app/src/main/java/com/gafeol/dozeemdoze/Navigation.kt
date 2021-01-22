@@ -13,6 +13,8 @@ import com.firebase.ui.auth.IdpResponse
 import com.gafeol.dozeemdoze.util.isAuth
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_navigation.*
 
 class Navigation : AppCompatActivity() {
@@ -57,6 +59,12 @@ class Navigation : AppCompatActivity() {
             RC_SIGN_IN)
     }
 
+    fun saveUID(user : FirebaseUser) {
+        val userRef = FirebaseDatabase.getInstance().reference.child("users")
+        val cleanEmail = user.email!!.split('.').joinToString(",")
+        userRef.child(cleanEmail).setValue(user.uid)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -66,9 +74,9 @@ class Navigation : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 // Successfully signed in
                 val user = FirebaseAuth.getInstance().currentUser
-                // TODO: testar log de login
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundleOf(Pair("name", user!!.displayName), Pair("email", user!!.email)))
                 updateAuthButtons()
+                saveUID(user)
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check

@@ -3,10 +3,13 @@
     package="com.gafeol.dozeemdoze">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <application
         android:allowBackup="true"
@@ -15,15 +18,29 @@
         android:roundIcon="@drawable/ic_prescription"
         android:supportsRtl="true"
         android:theme="@style/Theme.DozeEmDoze">
+        <activity android:name=".AlarmView"
+            android:launchMode="singleTask">
+        <intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
 
         <receiver
             android:name=".receiver.AlarmReceiver"
             android:enabled="true"
             android:exported="false" />
+        <receiver
+            android:name=".receiver.BootReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
-        <activity android:name=".AddDependant"
+        <activity
+            android:name=".AddDependant"
             android:label="Adicionar Dependente"
-            android:parentActivityName=".Medications"/>
+            android:parentActivityName=".Medications" />
         <activity
             android:name=".MedicationView"
             android:label="Medicação"

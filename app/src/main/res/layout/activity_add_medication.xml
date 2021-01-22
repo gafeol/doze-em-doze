@@ -113,6 +113,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:entries="@array/frequency" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/patientTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quem deve tomar essa medicação?"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+            <Spinner
+                android:visibility="gone"
+                android:id="@+id/patientSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
     <Button

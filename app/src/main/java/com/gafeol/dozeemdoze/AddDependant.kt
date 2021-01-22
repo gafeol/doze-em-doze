@@ -5,7 +5,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import com.gafeol.dozeemdoze.models.Dependant
-import com.gafeol.dozeemdoze.util.getUserDBRef
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_add_dependant.*
 
@@ -51,13 +50,7 @@ class AddDependant : AppCompatActivity() {
 
     fun saveDependant(view: View) {
         if(checkForm()){
-            val dep = getDependant()
-            val depRef = getUserDBRef().child("dependants/${dep.name}")
-            val depData = hashMapOf(
-                    "email" to (dep.email ?: ""),
-                    "img" to dep.img
-            )
-            depRef.setValue(depData)
+            getDependant().save()
             finish()
         }
     }

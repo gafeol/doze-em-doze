@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_medication_view.*
 
 class MedicationView : AppCompatActivity() {
-    private var med = Medication("Nenhuma medicação selecionada!", R.drawable.ic_pills, 0, 24*60)
+    private var med = Medication("Nenhuma medicação selecionada!", R.drawable.ic_pills, 0, 24*60, null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +23,7 @@ class MedicationView : AppCompatActivity() {
     }
 
     private fun nextAlarmMessage() : String {
-        val nextAlarmIn = med.nextAlarmTime()
+        val nextAlarmIn = med.minutesToAlarm()
         val hours = nextAlarmIn/60
         val hourNoun = "hora" + if(hours > 1) "s" else ""
         val min = nextAlarmIn%60

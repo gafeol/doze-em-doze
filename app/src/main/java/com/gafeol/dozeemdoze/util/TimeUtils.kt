@@ -5,6 +5,6 @@ fun formatTime(minutes: Int): String {
     val min = minutes%60
     val hourString = if (hour < 10) "0$hour" else "$hour"
     val minString = if(min < 10) "0$min" else "$min"
-    return hourString + ":" + minString
+    return "$hourString:$minString"
 }
 

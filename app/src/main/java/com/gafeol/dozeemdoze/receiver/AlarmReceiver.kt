@@ -20,7 +20,9 @@ import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.core.content.ContextCompat
+import com.gafeol.dozeemdoze.AlarmView
 import com.gafeol.dozeemdoze.util.getUserDBRef
 import com.gafeol.dozeemdoze.util.sendNotification
 import com.google.firebase.database.DataSnapshot
@@ -28,22 +30,34 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
 class AlarmReceiver: BroadcastReceiver() {
-
     override fun onReceive(context: Context, intent: Intent) {
         val notificationManager = ContextCompat.getSystemService(
                 context,
                 NotificationManager::class.java
         ) as NotificationManager
 
-        val medName = intent.getStringExtra("medName") ?: "SEMNOME"
-        getUserDBRef().child("alarme").addListenerForSingleValueEvent(object: ValueEventListener{
+        val time = intent.getIntExtra("time", 0)
+        Log.d("ALARM", "Received alarm time $time")
+        getUserDBRef().child("alarms/$time").addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                notificationManager.sendNotification(
-                    //"Hora de tomar $medName!",
-                    snapshot.value as String,
-                    context
-                )
+                var msg = "Agora é $time. Hora de tomar "
+                snapshot.children.forEachIndexed { index, med ->
+                    if(index > 0)
+                        msg += ", "
+                    msg += med.key!!
+                }
 
+                notificationManager.sendNotification(
+                        msg,
+                        context
+                )
+                val alarmViewIntent = Intent(context, AlarmView::class.java).apply {
+                    this.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or
+                            Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or
+                            Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
+                            Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP)
+                }
+                context.startActivity(alarmViewIntent)
             }
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
