@@ -40,7 +40,7 @@ class Medication(val name: String,
     }
 
     private fun alarmHash() : MutableMap<String, Any> {
-        var map = mutableMapOf<String, Any>()
+        val map = mutableMapOf<String, Any>()
         val schedule = alarmSchedule()
         for(time in schedule){
             val subMap = mutableMapOf<String, Any>(Pair(name, true))
@@ -57,7 +57,7 @@ class Medication(val name: String,
             "alarm/time" to startingTime,
             "alarm/frequency" to frequency
         )
-        dependant?.let { singleUpdate["dependant"]  to dependant}
+        dependant?.let { singleUpdate.put("dependant",dependant) }
         medRef.updateChildren(singleUpdate)
 
         // Saving alarm references
@@ -124,7 +124,7 @@ class Medication(val name: String,
                 PendingIntent.getBroadcast(context, time, alarmIntent, 0)
             }
 
-            var alarmAt = timeNow + ((24*60 + time - minutesToday)%(24*60))*60*1000L
+            val alarmAt = timeNow + ((24*60 + time - minutesToday)%(24*60))*60*1000L
             alarmManager?.setRepeating(
                     AlarmManager.ELAPSED_REALTIME_WAKEUP,
                     alarmAt,
@@ -173,8 +173,8 @@ class MedicationAdapter(context: Context, medList: List<Medication>)
         val retView: View
 
         if(convertView == null){
-            val inflater = LayoutInflater.from(context);
-            retView = inflater.inflate(R.layout.row_medication, parent, false);
+            val inflater = LayoutInflater.from(context)
+            retView = inflater.inflate(R.layout.row_medication, parent, false)
             holder.name = retView.medTitleTextView
             holder.img = retView.medImageView
             retView.tag = holder
