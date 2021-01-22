@@ -1,20 +1,16 @@
 package com.gafeol.dozeemdoze
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.SystemClock
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.gafeol.dozeemdoze.receiver.AlarmReceiver
 import com.gafeol.dozeemdoze.util.getUserDBRef
+import com.gafeol.dozeemdoze.util.setAlarm
 import com.google.firebase.database.DataSnapshot
 import kotlinx.android.synthetic.main.row_medication.view.*
 import java.util.*
@@ -77,10 +73,6 @@ class Medication(val name: String,
         return minutesToAlarm
     }
 
-    fun nextAlarmTime() : Int {
-        return minutesToAlarm() + minutesToday()
-    }
-
     private fun alarmSchedule() : List<Int> {
         val schedule = mutableListOf<Int>()
         if(frequency < 10){ // DEBUG
@@ -99,30 +91,7 @@ class Medication(val name: String,
     }
 
     fun setAlarm(context : Context, intent: Intent){
-        var timeNow = SystemClock.elapsedRealtime()
-        timeNow = (timeNow/60000)*60000 // Removing seconds from timeNow
-        val minutesToday = minutesToday()
-        alarmSchedule().forEach { time ->
-            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
-            val pendingIntent = PendingIntent.getService(context, time, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-            if (pendingIntent != null && alarmManager != null) {
-                alarmManager.cancel(pendingIntent)
-            }
-            val alarmIntent = Intent(context, AlarmReceiver::class.java).let { alarmIntent ->
-                alarmIntent.putExtra("time", time)
-                alarmIntent.flags = Intent.FLAG_RECEIVER_FOREGROUND // tentando resolver problema de atrasos na notificação
-                PendingIntent.getBroadcast(context, time, alarmIntent, 0)
-            }
-
-            val alarmAt = timeNow + ((24*60 + time - minutesToday)%(24*60))*60*1000L
-            alarmManager?.setRepeating(
-                    AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                    alarmAt,
-                    AlarmManager.INTERVAL_DAY,
-                    alarmIntent
-            )
-            Log.d("ALARM", "Set alarm for $time triggering at $alarmAt")
-        }
+        alarmSchedule().forEach { time -> setAlarm(context, intent, time) }
     }
 }
 
