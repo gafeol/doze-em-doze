@@ -121,7 +121,7 @@ class Navigation : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 // Successfully signed in
                 val user = FirebaseAuth.getInstance().currentUser
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundleOf(Pair("name", user!!.displayName), Pair("email", user!!.email)))
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundleOf(Pair("name", user!!.displayName), Pair("email", user.email)))
                 updateAuthButtons()
                 saveUID(user)
             } else {

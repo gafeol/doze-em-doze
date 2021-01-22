@@ -37,7 +37,7 @@ class AddMedication : AppCompatActivity() {
                     snapshot.children.forEach{dependantSnap ->
                         dependantList.add(dependantSnap.key.toString())
                     }
-                    val arrayAdapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, dependantList);
+                    val arrayAdapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, dependantList)
                     patientSpinner.adapter = arrayAdapter
                     patientSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                         override fun onItemSelected(

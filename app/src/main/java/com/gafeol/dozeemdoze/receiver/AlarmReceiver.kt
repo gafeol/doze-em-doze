@@ -52,10 +52,10 @@ class AlarmReceiver: BroadcastReceiver() {
                         context
                 )
                 val alarmViewIntent = Intent(context, AlarmView::class.java).apply {
-                    this.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or
+                    this.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                             Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or
                             Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
-                            Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP)
+                            Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP
                 }
                 context.startActivity(alarmViewIntent)
             }

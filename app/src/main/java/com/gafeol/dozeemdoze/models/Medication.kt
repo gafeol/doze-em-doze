@@ -39,16 +39,6 @@ class Medication(val name: String,
         return bundle
     }
 
-    private fun alarmHash() : MutableMap<String, Any> {
-        val map = mutableMapOf<String, Any>()
-        val schedule = alarmSchedule()
-        for(time in schedule){
-            val subMap = mutableMapOf<String, Any>(Pair(name, true))
-            map[time.toString()] = subMap
-        }
-        return map
-    }
-
     // Save medicine to firebase
     fun save() {
         val medRef = getUserDBRef().child("medication/$name")
