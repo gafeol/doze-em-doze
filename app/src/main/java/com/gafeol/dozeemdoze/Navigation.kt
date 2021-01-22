@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_navigation.*
+import java.util.*
 
 class Navigation : AppCompatActivity() {
     private val RC_SIGN_IN: Int = 123
@@ -33,9 +34,15 @@ class Navigation : AppCompatActivity() {
     private fun getOverlayPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.canDrawOverlays(this)) {
-                Log.d("PKG", Uri.parse("package:$packageName").toString())
-                val getPermissionsIntent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
-                getPermissionsIntent.data = Uri.parse("package:$packageName")
+                var getPermissionsIntent  : Intent
+                if(isXiaomi()){
+                    getPermissionsIntent = Intent("miui.intent.action.APP_PERM_EDITOR")
+                            .setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.PermissionsEditorActivity")
+                            .putExtra("extra_pkgname", packageName)
+                }
+                else {
+                    getPermissionsIntent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName"))
+                }
                 startActivityForResult(getPermissionsIntent, RC_OVERLAY_PERMISSION)
             }
         }
@@ -46,25 +53,26 @@ class Navigation : AppCompatActivity() {
         if (Settings.canDrawOverlays(applicationContext))
             return
         val builder = AlertDialog.Builder(this)
-                .setMessage("Para usar alarmes sonoros é necessário dar a permissão de \"sobreposição de telas\" para este aplicativo.")
+                .setIcon(android.R.drawable.ic_dialog_alert)
                 .setCancelable(false)
-                .setPositiveButton("Sim", object : DialogInterface.OnClickListener {
-                    override fun onClick(dialog: DialogInterface?, p1: Int) {
-                        dialog?.cancel()
-                        getOverlayPermission()
-                    }
-                })
-                .setNegativeButton("Não", object : DialogInterface.OnClickListener {
-                    override fun onClick(dialog: DialogInterface?, p1: Int) {
-                        dialog?.cancel()
-                        startMedications()
-                    }
-                })
-
+                .setPositiveButton("Permitir") { dialog, p1 ->
+                    dialog?.cancel()
+                    getOverlayPermission()
+                }
+                .setNegativeButton("Não permitir") { dialog, p1 ->
+                    dialog?.cancel()
+                    startMedications()
+                }
+        if(isXiaomi())
+            builder.setMessage("Para usar alarmes sonoros é necessário dar as permissões \"Exibir janelas pop-up\" e \"Mostrar janelas pop-up enquanto estiver executando em segundo plano\" para este aplicativo.")
+        else
+            builder.setMessage("Para usar alarmes sonoros é necessário dar a permissão de \"Exibir janelas pop-up\" para este aplicativo.")
         val dialog: AlertDialog = builder.create()
         dialog.setTitle("Permitir uso de alarmes?")
         dialog.show()
     }
+
+    private fun isXiaomi() : Boolean = ("xiaomi" == Build.MANUFACTURER.toLowerCase(Locale.ROOT))
 
     private fun updateAuthButtons() {
         if(isAuth()) {
@@ -92,18 +100,18 @@ class Navigation : AppCompatActivity() {
     fun onSignIn (v: View) {
         // Choose authentication providers
         val providers = arrayListOf(
-            AuthUI.IdpConfig.EmailBuilder().build(),
-            AuthUI.IdpConfig.GoogleBuilder().build())
+                AuthUI.IdpConfig.EmailBuilder().build(),
+                AuthUI.IdpConfig.GoogleBuilder().build())
 
         // Create and launch sign-in intent
         startActivityForResult(
-            AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .setTheme(R.style.Theme_DozeEmDoze_NoActionBar)
-                .setLogo(R.drawable.ic_prescription)
-                .build(),
-            RC_SIGN_IN)
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(providers)
+                        .setTheme(R.style.Theme_DozeEmDoze_NoActionBar)
+                        .setLogo(R.drawable.ic_prescription)
+                        .build(),
+                RC_SIGN_IN)
     }
 
     fun saveUID(user : FirebaseUser) {
