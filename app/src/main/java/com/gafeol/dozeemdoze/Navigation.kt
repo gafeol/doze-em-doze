@@ -1,10 +1,16 @@
 package com.gafeol.dozeemdoze
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
@@ -22,10 +28,51 @@ class Navigation : AppCompatActivity() {
 
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
 
+    private val RC_OVERLAY_PERMISSION = 111
+
+    private fun getOverlayPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                Log.d("PKG", Uri.parse("package:$packageName").toString())
+                val getPermissionsIntent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+                getPermissionsIntent.data = Uri.parse("package:$packageName")
+                startActivityForResult(getPermissionsIntent, RC_OVERLAY_PERMISSION)
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun createPermissionAlertDialog() {
+        if (Settings.canDrawOverlays(applicationContext))
+            return
+        val builder = AlertDialog.Builder(this)
+                .setMessage("Para usar alarmes sonoros é necessário dar a permissão de \"sobreposição de telas\" para este aplicativo.")
+                .setCancelable(false)
+                .setPositiveButton("Sim", object : DialogInterface.OnClickListener {
+                    override fun onClick(dialog: DialogInterface?, p1: Int) {
+                        dialog?.cancel()
+                        getOverlayPermission()
+                    }
+                })
+                .setNegativeButton("Não", object : DialogInterface.OnClickListener {
+                    override fun onClick(dialog: DialogInterface?, p1: Int) {
+                        dialog?.cancel()
+                        startMedications()
+                    }
+                })
+
+        val dialog: AlertDialog = builder.create()
+        dialog.setTitle("Permitir uso de alarmes?")
+        dialog.show()
+    }
+
     private fun updateAuthButtons() {
         if(isAuth()) {
             signInButton.visibility = View.GONE
-            startMedications()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this))
+                createPermissionAlertDialog()
+            else
+                startMedications()
         }
         else {
             signInButton.visibility = View.VISIBLE
@@ -86,6 +133,12 @@ class Navigation : AppCompatActivity() {
                     Log.e("SIGN", response.error?.errorCode.toString())
                 }
             }
+        }
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && requestCode === RC_OVERLAY_PERMISSION) {
+            if(!Settings.canDrawOverlays(this))
+                createPermissionAlertDialog()
+            else
+                startMedications()
         }
     }
 
