@@ -8,7 +8,7 @@ class Dependant(val name: String,
 
     // Save dependant to firebase
     fun save() {
-        val depRef = getUserDBRef().child("dependant/$name")
+        val depRef = getUserDBRef().child("dependants/$name")
         var singleUpdate = mutableMapOf<String, Any>(
                 "email" to (email ?: ""),
                 "img" to img
@@ -18,7 +18,7 @@ class Dependant(val name: String,
     }
 
     fun delete() {
-        val depRef = getUserDBRef().child("dependant/$name")
+        val depRef = getUserDBRef().child("dependants/$name")
         depRef.removeValue()
     }
 

@@ -32,7 +32,7 @@ class AddMedication : AppCompatActivity() {
         getUserDBRef().child("dependants").addListenerForSingleValueEvent(object :
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val dependantList = mutableListOf<String>("Você mesmo")
+                val dependantList = mutableListOf("Você mesmo")
                 if(snapshot.exists() && snapshot.hasChildren()){
                     snapshot.children.forEach{dependantSnap ->
                         dependantList.add(dependantSnap.key.toString())

@@ -76,8 +76,8 @@ class Medications : AppCompatActivity() {
                 .signOut(this)
                 .addOnCompleteListener {
                     val intent = Intent(applicationContext, Navigation::class.java)
-                    finish()
                     startActivity(intent)
+                    finish()
                 }
     }
 

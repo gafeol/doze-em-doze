@@ -34,13 +34,13 @@ class AddDependant : AppCompatActivity() {
 
     private fun deselectImages() = imgLinearLayout.children.forEach { it.isSelected = false }
 
-    fun chooseImage(view: View) {
+    private fun chooseImage(view: View) {
         deselectImages()
         view.isSelected = true
         img = resources.getIdentifier(view.tag.toString(), "drawable", packageName)
     }
 
-    fun getDependant() : Dependant {
+    private fun getDependant() : Dependant {
         return Dependant(
                 nameEditText.text.toString(),
                 emailEditText.text.toString(),
