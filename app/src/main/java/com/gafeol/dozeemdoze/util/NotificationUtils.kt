@@ -62,7 +62,6 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         // TODO: Step 1.13 set content intent
         .setContentIntent(contentPendingIntent)
         .setAutoCancel(true)
-
         .addAction(
             R.drawable.ic_check,
             "Tomei os remédios!",

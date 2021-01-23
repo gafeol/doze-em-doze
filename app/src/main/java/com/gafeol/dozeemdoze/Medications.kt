@@ -1,5 +1,6 @@
 package com.gafeol.dozeemdoze
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
@@ -110,6 +111,7 @@ class Medications : AppCompatActivity() {
             notificationChannel.lightColor = Color.RED
             notificationChannel.enableVibration(true)
             notificationChannel.description = "Canal para avisar horários de medicação"
+            notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
 
             val notificationManager = this.getSystemService(
                 NotificationManager::class.java
