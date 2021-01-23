@@ -49,14 +49,11 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         FLAGS
     )
 
-
     // TODO: Step 1.2 get an instance of NotificationCompat.Builder
     val builder = NotificationCompat.Builder(
         applicationContext,
         applicationContext.getString(R.string.med_notification_channel_id)
     )
-
-        // TODO: Step 1.8 use the new 'breakfast' notification channel
         // TODO: Step 1.3 set title, text and icon to builder
         .setSmallIcon(R.drawable.ic_pills)
         .setContentTitle(applicationContext.getString(R.string.notification_title))
@@ -74,7 +71,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         // TODO: Step 2.3 add snooze action
         .addAction(
                 R.drawable.ic_snooze,
-                "Adiar alarm",
+                "Adiar alarme",
                 snoozePendingIntent
         )
         // TODO: Step 2.5 set priority
@@ -83,7 +80,6 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
     notify(NOTIFICATION_ID, builder.build())
 }
 
-// TODO: Step 1.14 Cancel all notifications
 /**
  * Cancels all notifications.
  *

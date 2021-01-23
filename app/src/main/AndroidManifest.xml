@@ -43,6 +43,11 @@
             android:enabled="true"
             android:exported="false">
         </receiver>
+        <receiver
+            android:name=".receiver.TakenMedReceiver"
+            android:enabled="true"
+            android:exported="false">
+        </receiver>
 
         <activity
             android:name=".AddDependant"
