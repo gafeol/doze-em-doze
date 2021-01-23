@@ -13,6 +13,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.gafeol.dozeemdoze.receiver.SnoozeReceiver
+import kotlinx.android.synthetic.main.activity_alarm_view.*
 
 class AlarmView : AppCompatActivity() {
     lateinit var ringtone : Ringtone
@@ -27,6 +28,11 @@ class AlarmView : AppCompatActivity() {
         activity = this
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm_view)
+        playAlarm()
+        setMedText()
+    }
+
+    private fun playAlarm(){
         ringtone = RingtoneManager.getRingtone(applicationContext, alarmUri)
         if(!ringtone.isPlaying)
             ringtone.play()
@@ -37,6 +43,19 @@ class AlarmView : AppCompatActivity() {
         } else {
             vibrator.vibrate(500)
         }
+    }
+
+    private fun setMedText() {
+        val meds = intent.getStringArrayExtra("meds")
+        var msg : String = ""
+        meds?.forEachIndexed{i, medName ->
+            if(i == 0)
+                msg = "Hora de tomar "
+            else
+                msg += ", "
+            msg += medName
+        }
+        medsTextView.text = msg
     }
 
     fun tookPills(v : View) {

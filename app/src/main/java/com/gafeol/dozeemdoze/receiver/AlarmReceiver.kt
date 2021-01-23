@@ -41,10 +41,12 @@ class AlarmReceiver: BroadcastReceiver() {
         getUserDBRef().child("alarms/$time").addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 var msg = "Agora é $time. Hora de tomar "
+                var meds : MutableList<String> = mutableListOf()
                 snapshot.children.forEachIndexed { index, med ->
                     if(index > 0)
                         msg += ", "
                     msg += med.key!!
+                    meds.add(med.key!!)
                 }
 
                 notificationManager.sendNotification(
@@ -56,7 +58,9 @@ class AlarmReceiver: BroadcastReceiver() {
                             Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or
                             Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
                             Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP
+                    this.putExtra("meds", meds.toTypedArray())
                 }
+
                 context.startActivity(alarmViewIntent)
             }
             override fun onCancelled(error: DatabaseError) {

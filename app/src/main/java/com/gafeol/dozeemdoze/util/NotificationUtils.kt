@@ -8,6 +8,7 @@ import androidx.core.app.NotificationCompat
 import com.gafeol.dozeemdoze.Medications
 import com.gafeol.dozeemdoze.R
 import com.gafeol.dozeemdoze.receiver.SnoozeReceiver
+import com.gafeol.dozeemdoze.receiver.TakenMedReceiver
 
 // Notification ID.
 private val NOTIFICATION_ID = 0
@@ -40,6 +41,14 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
             FLAGS
     )
 
+    val takenMedIntent = Intent(applicationContext, TakenMedReceiver::class.java)
+    val takenMedPendingIntent = PendingIntent.getBroadcast(
+        applicationContext,
+        REQUEST_CODE,
+        takenMedIntent,
+        FLAGS
+    )
+
 
     // TODO: Step 1.2 get an instance of NotificationCompat.Builder
     val builder = NotificationCompat.Builder(
@@ -57,6 +66,11 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setContentIntent(contentPendingIntent)
         .setAutoCancel(true)
 
+        .addAction(
+            R.drawable.ic_check,
+            "Tomei os remédios!",
+            takenMedPendingIntent
+        )
         // TODO: Step 2.3 add snooze action
         .addAction(
                 R.drawable.ic_snooze,
