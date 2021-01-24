@@ -23,6 +23,14 @@ class Medication(val name: String,
                  val frequency : Int, // Specified on minutes
                  val dependant: String? = null) {
 
+    constructor(snap: DataSnapshot) : this(
+        snap.key!!,
+        snap.child("img").value?.let { (it as Long).toInt() } ?: R.drawable.ic_broken_image,
+        snap.child("alarm/time").value as Int,
+        snap.child("alarm/frequency").value as Int,
+        snap.child("dependant").value as String?
+    )
+
     fun bundle() : Bundle {
         val bundle = Bundle()
         bundle.putString("name", name)
@@ -93,21 +101,6 @@ class Medication(val name: String,
     fun setAlarm(context : Context, intent: Intent){
         alarmSchedule().forEach { time -> setAlarm(context, intent, time) }
     }
-}
-
-
-fun medFromSnapshot(snap: DataSnapshot): Medication {
-    val img : Int  = snap.child("img").value?.let { (it as Long).toInt() } ?: R.drawable.ic_broken_image
-    val startingTime = snap.child("alarm/time").value as Long
-    val frequency = snap.child("alarm/frequency").value as Long
-    val dependant = snap.child("dependant").value as String?
-    return Medication(
-        snap.key!!,
-        img,
-        startingTime.toInt(),
-        frequency.toInt(),
-        dependant
-    )
 }
 
 // Extension of Bundle to extract Medication

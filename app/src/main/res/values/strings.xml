@@ -23,7 +23,7 @@
     <string name="med_notification_channel_name">Lembretes de medicação</string>
     <string name="open_menu">Abrir menu</string>
     <string name="close_menu">Fechar menu</string>
-    <string name="title_activity_dependants">Dependants</string>
+    <string name="title_activity_dependants">Dependentes</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>

@@ -48,7 +48,7 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         medEventListener = (object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var medList = mutableListOf<Medication>()
-                snapshot.children.forEach{snap -> medList.add(medFromSnapshot(snap))}
+                snapshot.children.forEach{snap -> medList.add(Medication(snap))}
                 val adapter = MedicationAdapter(applicationContext, medList)
                 medListView.adapter = adapter
                 medListView.onItemClickListener = AdapterView.OnItemClickListener {
@@ -70,7 +70,11 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             this, drawerLayout, toolbar, R.string.open_menu, R.string.close_menu)
         drawerLayout?.addDrawerListener(toggle)
         toggle.syncState()
-        navView?.setNavigationItemSelectedListener(this);
+
+        if(navView != null){
+            navView.setNavigationItemSelectedListener(this)
+            navView.menu.findItem(R.id.nav_medications).isChecked = true
+        }
     }
 
     fun startAddMedication(v: View){
@@ -79,7 +83,6 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     }
 
     // MENU with sign out option
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.medications_menu, menu)
         return true
@@ -144,11 +147,7 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.nav_medications -> {
-                // Handle the camera import action (for now display a toast).
                 drawerLayout.closeDrawer(GravityCompat.START)
-                val medsIntent = Intent(applicationContext, Medications::class.java)
-                startActivity(medsIntent)
-                finish()
                 true
             }
             R.id.nav_alarms -> {
@@ -156,7 +155,9 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 true
             }
             R.id.nav_dependants -> {
-                Toast.makeText(applicationContext, "Ainda não implementado :/", Toast.LENGTH_SHORT).show()
+                val intent = Intent(applicationContext, Dependants::class.java)
+                startActivity(intent)
+                finish()
                 true
             }
             R.id.nav_sign_out -> {
