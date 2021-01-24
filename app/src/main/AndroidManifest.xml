@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gafeol.dozeemdoze">
+    package="com.gafeol.dozeemdoze" >
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
@@ -14,17 +14,23 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_prescription"
+        android:icon="@drawable/ic_logo_square"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ic_prescription"
+        android:roundIcon="@drawable/ic_logo_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DozeEmDoze">
-        <activity android:name=".AlarmView"
+        android:theme="@style/Theme.DozeEmDoze" >
+        <activity
+            android:name=".Dependants"
+            android:label="@string/title_activity_dependants"
+            android:theme="@style/Theme.DozeEmDoze.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".AlarmView"
             android:label="Hora da sua medicação!"
-            android:launchMode="singleTask">
-        <intent-filter>
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <receiver
@@ -33,7 +39,7 @@
             android:exported="false" />
         <receiver
             android:name=".receiver.BootReceiver"
-            android:enabled="true">
+            android:enabled="true" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -41,18 +47,18 @@
         <receiver
             android:name=".receiver.SnoozeReceiver"
             android:enabled="true"
-            android:exported="false">
+            android:exported="false" >
         </receiver>
         <receiver
             android:name=".receiver.TakenMedReceiver"
             android:enabled="true"
-            android:exported="false">
+            android:exported="false" >
         </receiver>
 
         <activity
             android:name=".AddDependant"
             android:label="Adicionar Dependente"
-            android:parentActivityName=".Medications"/>
+            android:parentActivityName=".Medications" />
         <activity
             android:name=".MedicationView"
             android:label="Medicação"
@@ -68,9 +74,10 @@
             android:theme="@style/Theme.DozeEmDoze.NoActionBar" />
         <activity
             android:name=".Navigation"
-            android:theme="@style/Theme.DozeEmDoze.NoActionBar">
+            android:theme="@style/Theme.DozeEmDoze.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

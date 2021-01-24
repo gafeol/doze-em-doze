@@ -108,7 +108,7 @@ class Navigation : AppCompatActivity() {
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
                         .setTheme(R.style.Theme_DozeEmDoze_NoActionBar)
-                        .setLogo(R.drawable.ic_prescription)
+                        .setLogo(R.drawable.ic_logo_round)
                         .build(),
                 RC_SIGN_IN)
     }

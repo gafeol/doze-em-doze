@@ -8,20 +8,13 @@
     android:orientation="vertical"
     android:layout_marginTop="100dp"
     tools:context=".Navigation">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="De doze em doze"
-            android:gravity="center"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"/>
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingVertical="50dp"
             android:paddingHorizontal="100dp"
             android:layout_weight="2"
-            android:contentDescription="Ícone que representa uma prescrição médica, com pílulas no canto."
-            android:src="@drawable/ic_prescription"/>
+            android:src="@drawable/ic_logo24"/>
 
         <com.google.android.flexbox.FlexboxLayout
             android:layout_weight="3"
@@ -35,7 +28,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="onSignIn"
-                    android:text="Sign In" />
+                    android:text="Entrar" />
 
         </com.google.android.flexbox.FlexboxLayout>
 
