@@ -52,7 +52,7 @@ class Navigation : AppCompatActivity() {
         if (Settings.canDrawOverlays(applicationContext))
             return
         val builder = AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(R.drawable.ic_warning_black)
                 .setCancelable(false)
                 .setPositiveButton("Permitir") { dialog, p1 ->
                     dialog?.cancel()
