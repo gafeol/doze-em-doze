@@ -140,4 +140,3 @@ class Dependants : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         }
     }
 }
-
