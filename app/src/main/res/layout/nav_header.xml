@@ -33,6 +33,7 @@ limitations under the License. -->
         android:src="@drawable/ic_round_small_logo"/>
 
     <TextView
+        android:id="@+id/helloTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"

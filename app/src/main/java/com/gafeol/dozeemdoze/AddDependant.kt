@@ -34,11 +34,6 @@ class AddDependant : AppCompatActivity() {
 
     private fun deselectImages() = imgLinearLayout.children.forEach { it.isSelected = false }
 
-    private fun chooseImage(view: View) {
-        deselectImages()
-        view.isSelected = true
-        img = resources.getIdentifier(view.tag.toString(), "drawable", packageName)
-    }
 
     private fun getDependant() : Dependant {
         return Dependant(
@@ -53,5 +48,11 @@ class AddDependant : AppCompatActivity() {
             getDependant().save()
             finish()
         }
+    }
+
+    fun chooseImage(view: View) {
+        deselectImages()
+        view.isSelected = true
+        img = resources.getIdentifier(view.tag.toString(), "drawable", packageName)
     }
 }

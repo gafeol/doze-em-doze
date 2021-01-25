@@ -83,7 +83,7 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
     // MENU with sign out option
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.medications_menu, menu)
+        menuInflater.inflate(R.menu.lists_menu, menu)
         return true
     }
 
@@ -103,7 +103,12 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 signOut()
                 true
             }
-            R.id.addDependent -> {
+            R.id.addMedication -> {
+                val addMedIntent = Intent(applicationContext, AddMedication::class.java).apply {}
+                startActivity(addMedIntent)
+                true
+            }
+            R.id.addDependant -> {
                 val addDepIntent = Intent(applicationContext, AddDependant::class.java).apply {}
                 startActivity(addDepIntent)
                 true
