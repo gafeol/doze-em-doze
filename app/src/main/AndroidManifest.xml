@@ -42,11 +42,11 @@
         <receiver
             android:name=".receiver.SnoozeReceiver"
             android:enabled="true"
-            android:exported="false"></receiver>
+            android:exported="false" />
         <receiver
             android:name=".receiver.TakenMedReceiver"
             android:enabled="true"
-            android:exported="false"></receiver>
+            android:exported="false" />
 
         <activity
             android:name=".AddDependant"
@@ -60,12 +60,16 @@
             android:name=".AddMedication"
             android:label="Adicionar Medicação"
             android:parentActivityName=".Medications" />
+        <activity android:name=".Alarms"
+            android:label="Alarmes"
+            android:theme="@style/Theme.DozeEmDoze.NoActionBar" />
         <activity
             android:name=".Medications"
             android:label="@string/title_activity_medications"
             android:parentActivityName=".Navigation"
             android:theme="@style/Theme.DozeEmDoze.NoActionBar" />
-        <activity android:name=".Dependants"
+        <activity
+            android:name=".Dependants"
             android:label="@string/title_activity_dependants"
             android:theme="@style/Theme.DozeEmDoze.NoActionBar" />
         <activity

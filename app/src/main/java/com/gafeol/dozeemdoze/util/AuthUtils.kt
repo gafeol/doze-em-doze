@@ -13,4 +13,6 @@ fun getUserDBRef(): DatabaseReference {
     throw Exception("User not authenticated to perform this action!")
 }
 
+fun getUserEmail() = FirebaseAuth.getInstance().currentUser?.email
+
 fun isAuth() = (FirebaseAuth.getInstance().currentUser != null)

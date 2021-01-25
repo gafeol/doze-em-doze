@@ -12,7 +12,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -151,10 +150,14 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 true
             }
             R.id.nav_alarms -> {
-                Toast.makeText(applicationContext, "Ainda não implementado :/", Toast.LENGTH_SHORT).show()
+                drawerLayout.closeDrawer(GravityCompat.START)
+                val intent = Intent(applicationContext, Alarms::class.java)
+                startActivity(intent)
+                finish()
                 true
             }
             R.id.nav_dependants -> {
+                drawerLayout.closeDrawer(GravityCompat.START)
                 val intent = Intent(applicationContext, Dependants::class.java)
                 startActivity(intent)
                 finish()

@@ -5,61 +5,60 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.firebase.ui.auth.AuthUI
-import com.gafeol.dozeemdoze.models.Dependant
-import com.gafeol.dozeemdoze.models.DependantAdapter
+import com.gafeol.dozeemdoze.models.Alarm
+import com.gafeol.dozeemdoze.models.AlarmAdapter
 import com.gafeol.dozeemdoze.util.getUserDBRef
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.activity_dependants.*
+import kotlinx.android.synthetic.main.activity_alarms.*
 import kotlinx.android.synthetic.main.app_bar_medications.*
-import kotlinx.android.synthetic.main.content_dependants.*
+import kotlinx.android.synthetic.main.content_alarms.*
 
-class Dependants : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
+class Alarms : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dependants)
+        setContentView(R.layout.activity_alarms)
         setSupportActionBar(toolbar)
 
-        // Renders dep list
-        val dependantRef = getUserDBRef().child("dependants")
-        val dependantEventListener = (object : ValueEventListener {
+        // Renders alarm list
+        val alarmRef = getUserDBRef().child("alarms")
+        val alarmEventListener = (object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                var dependantList = mutableListOf<Dependant>()
-                snapshot.children.forEach{snap -> dependantList.add(Dependant(snap))}
-                val adapter = DependantAdapter(applicationContext, dependantList)
-                dependantListView.adapter = adapter
-                dependantListView.onItemClickListener = AdapterView.OnItemClickListener {
-                    parent, view, position, id ->
+                var alarmList = mutableListOf<Alarm>()
+                snapshot.children.forEach{snap -> alarmList.add(Alarm(snap))}
+                val adapter = AlarmAdapter(applicationContext, alarmList)
+                alarmListView.adapter = adapter
+                alarmListView.onItemClickListener = AdapterView.OnItemClickListener {
+                        parent, view, position, id ->
                     Toast.makeText(applicationContext, "Nao implementado", Toast.LENGTH_SHORT).show()
-                    //val intent = Intent(applicationContext, DependantView::class.java).apply{}
-                    //val dependanticationBundle = dependantList[position].bundle()
-                    //intent.putExtra("dependant", dependanticationBundle)
+                    //val intent = Intent(applicationContext, AlarmView::class.java).apply{}
+                    //val alarmicationBundle = alarmList[position].bundle()
+                    //intent.putExtra("alarm", alarmicationBundle)
                     //startActivity(intent)
                 }
             }
             override fun onCancelled(error: DatabaseError) {
-                Log.d("FIREBASE", "Cancelled dependants search")
+                Log.d("FIREBASE", "Cancelled alarms search")
             }
         })
-        dependantRef.addValueEventListener(dependantEventListener)
+        alarmRef.addValueEventListener(alarmEventListener)
 
         // Drawer layout
         val toggle = ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.open_menu, R.string.close_menu)
+            this, drawerLayout, toolbar, R.string.open_menu, R.string.close_menu)
         drawerLayout?.addDrawerListener(toggle)
         toggle.syncState()
         if(navView != null){
             navView.setNavigationItemSelectedListener(this)
-            navView.menu.findItem(R.id.nav_dependants).isChecked = true
+            navView.menu.findItem(R.id.nav_alarms).isChecked = true
         }
     }
     // Nav Drawer
@@ -81,13 +80,12 @@ class Dependants : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             }
             R.id.nav_alarms -> {
                 drawerLayout.closeDrawer(GravityCompat.START)
-                val intent = Intent(applicationContext, Alarms::class.java)
-                startActivity(intent)
-                finish()
                 true
             }
             R.id.nav_dependants -> {
                 drawerLayout.closeDrawer(GravityCompat.START)
+                val depIntent = Intent(applicationContext, Dependants::class.java)
+                startActivity(depIntent)
                 true
             }
             R.id.nav_sign_out -> {
@@ -98,10 +96,6 @@ class Dependants : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         }
     }
 
-    fun startAddDependant(v: View){
-        val intent = Intent(this, AddDependant::class.java).apply{}
-        startActivity(intent)
-    }
 
     // MENU with sign out option
 
@@ -112,12 +106,12 @@ class Dependants : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
 
     private fun signOut() {
         AuthUI.getInstance()
-                .signOut(this)
-                .addOnCompleteListener {
-                    val intent = Intent(applicationContext, Navigation::class.java)
-                    startActivity(intent)
-                    finish()
-                }
+            .signOut(this)
+            .addOnCompleteListener {
+                val intent = Intent(applicationContext, Navigation::class.java)
+                startActivity(intent)
+                finish()
+            }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
