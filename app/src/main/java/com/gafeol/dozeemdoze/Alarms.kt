@@ -86,6 +86,7 @@ class Alarms : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListe
                 drawerLayout.closeDrawer(GravityCompat.START)
                 val depIntent = Intent(applicationContext, Dependants::class.java)
                 startActivity(depIntent)
+                finish()
                 true
             }
             R.id.nav_sign_out -> {
