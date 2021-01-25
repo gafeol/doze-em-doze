@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Doze em doze</string>
+    <string name="app_name">De 12 em 12 horas</string>
     <string name="title_activity_medications">Medicações</string>
     <string name="med_notification_channel_id">med_notification</string>
     <string name="notification_title">Hora do remédio!</string>
