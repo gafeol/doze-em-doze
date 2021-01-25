@@ -13,6 +13,7 @@ tools:context=".Alarms">
 </com.google.android.material.appbar.AppBarLayout>
 
 <ListView
+    android:layout_marginTop="60dp"
     android:id="@+id/alarmListView"
     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
     android:layout_width="match_parent"

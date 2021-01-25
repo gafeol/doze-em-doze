@@ -15,7 +15,7 @@ class Alarm(val time: Int,
                 val medications: Array<String>) {
 
     constructor(snap: DataSnapshot) : this(
-        snap.key!! as Int,
+        snap.key!!.toInt(),
         snap.children.map { it.key!! }.toTypedArray()
     )
 

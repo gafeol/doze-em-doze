@@ -19,7 +19,7 @@ class Dependant(val name: String,
     constructor(snap: DataSnapshot) : this(
         snap.key!!,
         snap.child("email")?.value as String,
-        snap.child("img").value as Int
+        (snap.child("img").value as Long).toInt()
     )
 
     // Save dependant to firebase

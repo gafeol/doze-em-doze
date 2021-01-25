@@ -26,8 +26,8 @@ class Medication(val name: String,
     constructor(snap: DataSnapshot) : this(
         snap.key!!,
         snap.child("img").value?.let { (it as Long).toInt() } ?: R.drawable.ic_broken_image,
-        snap.child("alarm/time").value as Int,
-        snap.child("alarm/frequency").value as Int,
+        (snap.child("alarm/time").value as Long).toInt(),
+        (snap.child("alarm/frequency").value as Long).toInt(),
         snap.child("dependant").value as String?
     )
 
