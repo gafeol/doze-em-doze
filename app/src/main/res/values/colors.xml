@@ -9,8 +9,16 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#777777CC</color>
 
+    <color name="blue_200">#94dbef</color>
+    <color name="blue_500">#55b7e2</color>
+    <color name="blue_700">#4395c1</color>
+    <color name="queen_blue">#33657A</color>
+    <color name="green_200">#c5e1a5</color>
+    <color name="green_300">#aed581</color>
+    <color name="green_500">#8bc34a</color>
+    <color name="green_700">#689f38</color>
+
     <color name="emerald">#39CE63</color>
-    <color name="queen_blue">#33658A</color>
     <color name="dark_sky_blue">#86BBD8</color>
     <color name="honey_yellow">#f6ae2d</color>
     <color name="blaze_orange">#f26419</color>
