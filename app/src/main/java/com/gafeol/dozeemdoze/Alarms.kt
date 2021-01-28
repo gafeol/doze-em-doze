@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.AdapterView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -36,14 +34,14 @@ class Alarms : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListe
                 snapshot.children.forEach{snap -> alarmList.add(Alarm(snap))}
                 val adapter = AlarmAdapter(applicationContext, alarmList)
                 alarmListView.adapter = adapter
-                alarmListView.onItemClickListener = AdapterView.OnItemClickListener {
-                        parent, view, position, id ->
+                /*
+                alarmListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
                     Toast.makeText(applicationContext, "Nao implementado", Toast.LENGTH_SHORT).show()
                     //val intent = Intent(applicationContext, AlarmView::class.java).apply{}
                     //val alarmicationBundle = alarmList[position].bundle()
                     //intent.putExtra("alarm", alarmicationBundle)
                     //startActivity(intent)
-                }
+                } */
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.d("FIREBASE", "Cancelled alarms search")

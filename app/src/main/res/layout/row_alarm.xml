@@ -14,6 +14,8 @@
         <TextView
             android:id="@+id/medicationsTextView"
             android:text="AAAAAAAAAAAAAAAAAAAA, AAAAAAAAAAA, Bla, ble, ble, blo, Donepezila, alenthus, bla bla, lorem, lorem"
+            android:textSize="@dimen/text_size_big"
+            android:gravity="center_vertical"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
