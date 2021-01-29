@@ -19,12 +19,17 @@ import androidx.core.view.GravityCompat
 import com.firebase.ui.auth.AuthUI
 import com.gafeol.dozeemdoze.util.getUserDBRef
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.activity_dependants.*
 import kotlinx.android.synthetic.main.activity_medications.*
+import kotlinx.android.synthetic.main.activity_medications.drawerLayout
+import kotlinx.android.synthetic.main.activity_medications.navView
 import kotlinx.android.synthetic.main.app_bar_medications.*
 import kotlinx.android.synthetic.main.content_medications.*
+import kotlinx.android.synthetic.main.nav_header.view.*
 
 class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
     fun forceLightTheme() = AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -73,6 +78,9 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         if(navView != null){
             navView.setNavigationItemSelectedListener(this)
             navView.menu.findItem(R.id.nav_medications).isChecked = true
+            FirebaseAuth.getInstance().currentUser?.let { user ->
+                navView.getHeaderView(0).helloTextView.text = "Olá ${user.displayName}!"
+            }
         }
     }
 

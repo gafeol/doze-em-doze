@@ -1,5 +1,6 @@
 package com.gafeol.dozeemdoze
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -28,6 +29,16 @@ class AddMedication : AppCompatActivity() {
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        setPatientViews()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        setPatientViews()
+    }
+
     private fun setPatientViews() {
         getUserDBRef().child("dependants").addListenerForSingleValueEvent(object :
             ValueEventListener {
@@ -54,8 +65,12 @@ class AddMedication : AppCompatActivity() {
                         }
 
                     }
+                    infoDependantTextView.visibility = View.GONE
                     patientTextView.visibility = View.VISIBLE
                     patientSpinner.visibility = View.VISIBLE
+                }
+                else {
+                    infoDependantTextView.visibility = View.VISIBLE
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -122,5 +137,10 @@ class AddMedication : AppCompatActivity() {
         deselectImages()
         view.isSelected = true
         img = resources.getIdentifier(view.tag.toString(), "drawable", packageName)
+    }
+
+    fun startAddDependant(view: View) {
+        val intent = Intent(this, AddDependant::class.java).apply{}
+        startActivity(intent)
     }
 }

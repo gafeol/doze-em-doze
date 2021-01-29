@@ -6,32 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".AlarmView">
 
+    <ImageView
+        android:id="@+id/alarmImageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_alarm_clock"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/medsTextView" />
+
     <TextView
         android:id="@+id/medsTextView"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="100dp"
         android:text="ALARMEEEEEEEEEEEEEEEEEEEEEEEE"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/snoozePills"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tookPills" />
+        app:layout_constraintTop_toBottomOf="@id/alarmImageView" />
 
     <Button
         android:id="@+id/snoozePills"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tookPills"
         android:onClick="snoozePills"
-        android:text="Adiar em cinco minutos" />
+        android:text="Adiar em cinco minutos"
+        app:cornerRadius="@dimen/cardview_default_radius"
+        app:layout_constraintBottom_toTopOf="@id/tookPills"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/tookPills"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:onClick="tookPills"
-        android:text="Tomei o remédio!" />
+        android:text="Tomei o remédio!"
+        app:cornerRadius="@dimen/cardview_default_radius"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

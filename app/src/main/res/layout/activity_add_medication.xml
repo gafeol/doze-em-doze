@@ -116,6 +116,18 @@
 
             <TextView
                 android:visibility="gone"
+                android:id="@+id/infoDependantTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableLeft="@drawable/ic_info"
+                android:drawablePadding="5dp"
+                android:textSize="@dimen/text_size_small"
+                android:onClick="startAddDependant"
+                android:text="Se deseja cadastrar essa medicação para outra pessoa, clique aqui para  cadastrar seu primeiro dependente"/>
+
+            <TextView
+                android:visibility="gone"
                 android:id="@+id/patientTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

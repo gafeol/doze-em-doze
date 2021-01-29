@@ -29,6 +29,10 @@ class AddDependant : AppCompatActivity() {
             iconTextView.error = "Escolha uma imagem"
             valid = false
         }
+        if(emailCheckBox.isChecked and emailEditText.text.isEmpty()){
+            emailEditText.error = "Digite o email associado à conta de seu dependente"
+            valid = false
+        }
         return valid
     }
 

@@ -16,12 +16,14 @@ import com.gafeol.dozeemdoze.models.Dependant
 import com.gafeol.dozeemdoze.models.DependantAdapter
 import com.gafeol.dozeemdoze.util.getUserDBRef
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_dependants.*
 import kotlinx.android.synthetic.main.app_bar_medications.*
 import kotlinx.android.synthetic.main.content_dependants.*
+import kotlinx.android.synthetic.main.nav_header.view.*
 
 class Dependants : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +62,9 @@ class Dependants : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         if(navView != null){
             navView.setNavigationItemSelectedListener(this)
             navView.menu.findItem(R.id.nav_dependants).isChecked = true
+            FirebaseAuth.getInstance().currentUser?.let { user ->
+                navView.getHeaderView(0).helloTextView.text = "Olá ${user.displayName}!"
+            }
         }
     }
     // Nav Drawer
