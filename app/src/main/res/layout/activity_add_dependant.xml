@@ -120,6 +120,198 @@
                             android:scaleType="fitCenter"
                             android:src="@drawable/ic_old_woman_2"
                             android:tag="ic_old_woman_2" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_girl"
+                            android:tag="ic_girl" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_boy_1"
+                            android:tag="ic_boy_1" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_girl_1"
+                            android:tag="ic_girl_1" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_boy"
+                            android:tag="ic_boy" />
+
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_businesswoman"
+                            android:tag="ic_businesswoman" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_businessman"
+                            android:tag="ic_businessman" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_businesswoman_2"
+                            android:tag="ic_businesswoman_2" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_businessman_1"
+                            android:tag="ic_businessman_1" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_businesswoman_3"
+                            android:tag="ic_businesswoman_3" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_businessman_2"
+                            android:tag="ic_businessman_2" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_businesswoman_1"
+                            android:tag="ic_businesswoman_1" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_businessman_3"
+                            android:tag="ic_businessman_3" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_man"
+                            android:tag="ic_man" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_woman"
+                            android:tag="ic_woman" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_man_1"
+                            android:tag="ic_man_1" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_woman_1"
+                            android:tag="ic_woman_1" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_woman_2"
+                            android:tag="ic_woman_2" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_dog"
+                            android:tag="ic_dog" />
+
+                        <ImageButton
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:background="@drawable/border_selector"
+                            android:onClick="chooseImage"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_cat"
+                            android:tag="ic_cat" />
+
                     </LinearLayout>
                 </HorizontalScrollView>
             </LinearLayout>
