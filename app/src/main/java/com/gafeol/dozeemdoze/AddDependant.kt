@@ -2,6 +2,7 @@ package com.gafeol.dozeemdoze
 
 import android.os.Bundle
 import android.view.View
+import android.widget.CheckBox
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import com.gafeol.dozeemdoze.models.Dependant
@@ -54,5 +55,15 @@ class AddDependant : AppCompatActivity() {
         deselectImages()
         view.isSelected = true
         img = resources.getIdentifier(view.tag.toString(), "drawable", packageName)
+    }
+
+    fun toggleCheckBox(view: View) {
+        if((view as CheckBox).isChecked()){
+            emailEditText.visibility = View.VISIBLE
+        }
+        else{
+            emailEditText.text.clear()
+            emailEditText.visibility = View.GONE
+        }
     }
 }
