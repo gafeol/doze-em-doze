@@ -23,10 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.activity_dependants.*
 import kotlinx.android.synthetic.main.activity_medications.*
-import kotlinx.android.synthetic.main.activity_medications.drawerLayout
-import kotlinx.android.synthetic.main.activity_medications.navView
 import kotlinx.android.synthetic.main.app_bar_medications.*
 import kotlinx.android.synthetic.main.content_medications.*
 import kotlinx.android.synthetic.main.nav_header.view.*
@@ -47,6 +44,7 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             getString(R.string.med_notification_channel_name)
         )
 
+        //startActivity(Intent(applicationContext, AlarmView::class.java))
         // Renders med list
         val medRef = getUserDBRef().child("medication")
         medEventListener = (object : ValueEventListener {
