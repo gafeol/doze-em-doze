@@ -44,7 +44,7 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             getString(R.string.med_notification_channel_name)
         )
 
-        //startActivity(Intent(applicationContext, AlarmView::class.java))
+        startActivity(Intent(applicationContext, AlarmView::class.java))
         // Renders med list
         val medRef = getUserDBRef().child("medication")
         medEventListener = (object : ValueEventListener {

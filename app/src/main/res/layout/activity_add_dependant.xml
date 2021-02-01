@@ -49,6 +49,15 @@
                     android:hint="Email do dependente"
                     android:inputType="textShortMessage" />
 
+                <CheckBox
+                    android:id="@+id/confirmationCheckBox"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="toggleCheckBox"
+                    android:layout_marginVertical="5dp"
+                    android:text="Quer que este dependente tire uma foto para toda medicação que tiver que tomar?"/>
+
                 <TextView
                     android:id="@+id/iconTextView"
                     android:layout_width="wrap_content"

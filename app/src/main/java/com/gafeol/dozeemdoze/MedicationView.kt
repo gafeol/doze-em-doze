@@ -34,9 +34,12 @@ class MedicationView : AppCompatActivity() {
             getUserDBRef().child("dependants/$dependantName").addListenerForSingleValueEvent(object : ValueEventListener1 {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val depList = listOf(
-                            Dependant(dependantName,
-                            snapshot.child("email").value as String?,
-                            (snapshot.child("img").value as Long).toInt())
+                            Dependant(
+                                    dependantName,
+                                    snapshot.child("email").value as String?,
+                                    (snapshot.child("img").value as Long).toInt(),
+                                    snapshot.child("confirmation").value as Boolean
+                            )
                     )
                     val adapter = DependantAdapter(applicationContext, depList)
                     dependantListView.adapter = adapter

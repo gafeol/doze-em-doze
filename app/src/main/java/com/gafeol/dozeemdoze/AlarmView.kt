@@ -20,6 +20,10 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.gafeol.dozeemdoze.receiver.SnoozeReceiver
+import com.gafeol.dozeemdoze.util.getUserDBRef
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_alarm_view.*
 import java.io.ByteArrayOutputStream
 
@@ -27,7 +31,8 @@ class AlarmView : AppCompatActivity() {
     lateinit var ringtone : Ringtone
     lateinit var vibrator : Vibrator
     private val alarmUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM) ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
-    private val CAM_REQUEST = 112;
+    private val CAM_REQUEST = 112
+    private var requiresConfirmation = false
 
     companion object {
         var activity : Activity? = null
@@ -37,8 +42,25 @@ class AlarmView : AppCompatActivity() {
         activity = this
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm_view)
+        checkConfirmation()
         playAlarm()
         setMedText()
+    }
+
+    private fun checkConfirmation() {
+        getUserDBRef().child("confirmation").addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.value?.let { value ->
+                    if(value as Boolean){
+                        requiresConfirmation = true
+                        tookPills.text = "Tirar foto das medicações"
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     private fun playAlarm(){
@@ -46,7 +68,6 @@ class AlarmView : AppCompatActivity() {
         if(!ringtone.isPlaying)
             ringtone.play()
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
         } else {
@@ -56,7 +77,7 @@ class AlarmView : AppCompatActivity() {
 
     private fun setMedText() {
         val meds = intent.getStringArrayExtra("meds")
-        var msg : String = ""
+        var msg = ""
         meds?.forEachIndexed{ i, medName ->
             if(i == 0)
                 msg = "Hora de tomar "
@@ -74,7 +95,10 @@ class AlarmView : AppCompatActivity() {
                 NotificationManager::class.java
         ) as NotificationManager
         notificationManager.cancelAll() // Não realmente cancela os próximos alarmes. (Checar se cancela pro dia seguinte)
-        takePhoto()
+        if(requiresConfirmation)
+            takePhoto()
+        else
+            finish()
     }
 
     private fun takePhoto() {
@@ -101,6 +125,7 @@ class AlarmView : AppCompatActivity() {
                     val shareIntent: Intent = Intent().apply {
                         action = Intent.ACTION_SEND
                         putExtra(Intent.EXTRA_STREAM, imageUri)
+                        putExtra(Intent.EXTRA_TITLE, "Testando titulo")
                         type = "image/jpeg"
                     }
                     startActivity(Intent.createChooser(shareIntent, "Enviar foto para:"))

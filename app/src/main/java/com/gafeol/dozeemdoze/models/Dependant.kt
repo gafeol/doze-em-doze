@@ -14,12 +14,14 @@ import kotlinx.android.synthetic.main.row_medication.view.*
 
 class Dependant(val name: String,
                val email: String?,
-                val img: Int) {
+                val img: Int,
+                val confirmation: Boolean) {
 
     constructor(snap: DataSnapshot) : this(
         snap.key!!,
-        snap.child("email")?.value as String,
-        (snap.child("img").value as Long).toInt()
+        snap.child("email").value as String,
+        (snap.child("img").value as Long).toInt(),
+        (snap.child("confirmation").value as Boolean)
     )
 
     // Save dependant to firebase
@@ -27,7 +29,8 @@ class Dependant(val name: String,
         val depRef = getUserDBRef().child("dependants/$name")
         var singleUpdate = mutableMapOf<String, Any>(
                 "email" to (email ?: ""),
-                "img" to img
+                "img" to img,
+                "confirmation" to confirmation
         )
         depRef.setValue(singleUpdate)
         // TODO: propagate save on dependant`s uid tag as well, only if they have an email

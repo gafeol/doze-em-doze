@@ -44,7 +44,8 @@ class AddDependant : AppCompatActivity() {
         return Dependant(
                 nameEditText.text.toString(),
                 emailEditText.text.toString(),
-                img
+                img,
+                confirmationCheckBox.isChecked
         )
     }
 
@@ -64,10 +65,13 @@ class AddDependant : AppCompatActivity() {
     fun toggleCheckBox(view: View) {
         if((view as CheckBox).isChecked()){
             emailEditText.visibility = View.VISIBLE
+            confirmationCheckBox.visibility = View.VISIBLE
         }
         else{
             emailEditText.text.clear()
             emailEditText.visibility = View.GONE
+            confirmationCheckBox.isChecked = false
+            confirmationCheckBox.visibility = View.GONE
         }
     }
 }
