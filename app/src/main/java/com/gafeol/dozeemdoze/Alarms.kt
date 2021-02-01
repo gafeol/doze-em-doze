@@ -96,6 +96,11 @@ class Alarms : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListe
                 signOut()
                 true
             }
+            R.id.nav_settings -> {
+                drawerLayout.closeDrawer(GravityCompat.START)
+                startActivity(Intent(applicationContext, Settings::class.java))
+                true
+            }
             else -> false
         }
     }
@@ -125,15 +130,20 @@ class Alarms : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListe
                 true
             }
             R.id.addMedication -> {
-                val addMedIntent = Intent(applicationContext, AddMedication::class.java).apply {}
+                val addMedIntent = Intent(applicationContext, AddMedication::class.java)
                 startActivity(addMedIntent)
                 finish()
                 true
             }
             R.id.addDependant -> {
-                val addDepIntent = Intent(applicationContext, AddDependant::class.java).apply {}
+                val addDepIntent = Intent(applicationContext, AddDependant::class.java)
                 startActivity(addDepIntent)
                 finish()
+                true
+            }
+            R.id.settings -> {
+                val settingsIntent = Intent(applicationContext, Settings::class.java)
+                startActivity(settingsIntent)
                 true
             }
             else -> false

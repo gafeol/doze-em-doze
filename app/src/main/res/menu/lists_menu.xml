@@ -7,6 +7,9 @@
         android:id="@+id/addMedication"
         android:title="Adicionar medicação"/>
     <item
+        android:id="@+id/settings"
+        android:title="Configurações"/>
+    <item
         android:id="@+id/signOutItem"
         android:title="Sign out"/>
 </menu>

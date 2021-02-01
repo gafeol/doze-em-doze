@@ -95,6 +95,11 @@ class Dependants : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                 drawerLayout.closeDrawer(GravityCompat.START)
                 true
             }
+            R.id.nav_settings -> {
+                drawerLayout.closeDrawer(GravityCompat.START)
+                startActivity(Intent(applicationContext, Settings::class.java))
+                true
+            }
             R.id.nav_sign_out -> {
                 signOut()
                 true

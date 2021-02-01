@@ -44,7 +44,7 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             getString(R.string.med_notification_channel_name)
         )
 
-        startActivity(Intent(applicationContext, AlarmView::class.java))
+            // startActivity(Intent(applicationContext, AlarmView::class.java))
         // Renders med list
         val medRef = getUserDBRef().child("medication")
         medEventListener = (object : ValueEventListener {
@@ -110,13 +110,18 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 true
             }
             R.id.addMedication -> {
-                val addMedIntent = Intent(applicationContext, AddMedication::class.java).apply {}
+                val addMedIntent = Intent(applicationContext, AddMedication::class.java)
                 startActivity(addMedIntent)
                 true
             }
             R.id.addDependant -> {
-                val addDepIntent = Intent(applicationContext, AddDependant::class.java).apply {}
+                val addDepIntent = Intent(applicationContext, AddDependant::class.java)
                 startActivity(addDepIntent)
+                true
+            }
+            R.id.settings -> {
+               val settingsIntent = Intent(applicationContext, Settings::class.java)
+                startActivity(settingsIntent)
                 true
             }
             else -> false
@@ -172,6 +177,11 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 val intent = Intent(applicationContext, Dependants::class.java)
                 startActivity(intent)
                 finish()
+                true
+            }
+            R.id.nav_settings -> {
+                drawerLayout.closeDrawer(GravityCompat.START)
+                startActivity(Intent(applicationContext, Settings::class.java))
                 true
             }
             R.id.nav_sign_out -> {
