@@ -42,7 +42,6 @@ class Settings : AppCompatActivity() {
                 "confirmation" -> {
                     val confirmation : Boolean = sharedPreferences.getBoolean("confirmation", false)
                     super.onPreferenceTreeClick(preference)
-                    Toast.makeText(context, "confirmation was enabled? ${preference.isEnabled}", Toast.LENGTH_SHORT).show()
                     if(confirmation)
                         getUserDBRef().child("confirmation").setValue(true)
                     else
