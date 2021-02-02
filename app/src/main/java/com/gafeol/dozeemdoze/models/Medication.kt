@@ -57,9 +57,12 @@ class Medication(val name: String,
             "alarm/frequency" to frequency
         )
         dependant?.let {
-            singleUpdate.also {
-                saveMedToDependant(name, it, dependant)
-            }
+            val updateWithoutDependant = mutableMapOf<String, Any>(
+                    "img" to img,
+                    "alarm/time" to startingTime,
+                    "alarm/frequency" to frequency
+            )
+            saveMedToDependant(name, updateWithoutDependant.toMap(), dependant)
             singleUpdate.put("dependant",dependant)
         }
         medRef.updateChildren(singleUpdate)
@@ -71,7 +74,7 @@ class Medication(val name: String,
         })
     }
 
-    fun saveMedToDependant(medName : String, medHash : Map<String, Any>, dependant : String) {
+    private fun saveMedToDependant(medName : String, medHash : Map<String, Any>, dependant : String) {
         getUserDBRef().child("dependants/$dependant").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.child("email").value?.let { originalEmail ->
