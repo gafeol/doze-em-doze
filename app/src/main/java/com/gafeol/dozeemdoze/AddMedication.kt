@@ -94,7 +94,7 @@ class AddMedication : AppCompatActivity() {
 
     private fun getFrequency() : Int {
         return when (frequencySpinner.selectedItem.toString()) {
-            "Todo dia" -> 24 * 60
+            "Uma vez por dia" -> 24 * 60
             "12 em 12 horas" -> 12 * 60
             "8 em 8 horas" -> 8 * 60
             "6 em 6 horas" -> 6 * 60

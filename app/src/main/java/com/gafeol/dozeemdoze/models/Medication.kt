@@ -3,15 +3,20 @@ package com.gafeol.dozeemdoze
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.gafeol.dozeemdoze.util.cleanEmail
+import com.gafeol.dozeemdoze.util.getDBRef
 import com.gafeol.dozeemdoze.util.getUserDBRef
 import com.gafeol.dozeemdoze.util.setAlarm
 import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.row_medication.view.*
 import java.util.*
 
@@ -51,13 +56,48 @@ class Medication(val name: String,
             "alarm/time" to startingTime,
             "alarm/frequency" to frequency
         )
-        dependant?.let { singleUpdate.put("dependant",dependant) }
+        dependant?.let {
+            singleUpdate.also {
+                saveMedToDependant(name, it, dependant)
+            }
+            singleUpdate.put("dependant",dependant)
+        }
         medRef.updateChildren(singleUpdate)
 
         // Saving alarm references
         val alarmRef = getUserDBRef().child("alarms")
         alarmSchedule().forEach(fun(time: Int) {
             alarmRef.child("$time/$name").setValue(true)
+        })
+    }
+
+    fun saveMedToDependant(medName : String, medHash : Map<String, Any>, dependant : String) {
+        getUserDBRef().child("dependants/$dependant").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.child("email").value?.let { originalEmail ->
+                    val cleanEmail = cleanEmail(originalEmail as String)
+                    Log.d("DEP", "Got email $cleanEmail")
+                    getDBRef().child("users/$cleanEmail").addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val dependantUID = snapshot.value
+                            Log.d("DEP", "Got UID $dependantUID")
+                            // Saving on dependantUID's Firebase record this medicine
+                            getDBRef().child("$dependantUID/medication/$medName").updateChildren(medHash)
+                            alarmSchedule().forEach(fun(time: Int) {
+                                getDBRef().child("$dependantUID/alarms/$time/$name").setValue(true)
+                            })
+                        }
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+                    })
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
         })
     }
 

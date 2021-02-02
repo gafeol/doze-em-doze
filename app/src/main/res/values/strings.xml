@@ -4,8 +4,7 @@
     <string name="med_notification_channel_id">med_notification</string>
     <string name="notification_title">Hora do remédio!</string>
     <string-array name="frequency">
-        <item>1 em 1 minuto</item>
-        <item>Todo dia</item>
+        <item>Uma vez por dia</item>
         <item>12 em 12 horas</item>
         <item>8 em 8 horas</item>
         <item>6 em 6 horas</item>

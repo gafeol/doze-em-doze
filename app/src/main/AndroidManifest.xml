@@ -21,7 +21,7 @@
         android:theme="@style/Theme.DozeEmDoze">
         <activity
             android:name=".Settings"
-            android:label="Configurações"></activity>
+            android:label="Configurações"/>
         <activity
             android:name=".AlarmView"
             android:label="Hora da sua medicação!"
@@ -81,7 +81,6 @@
             android:theme="@style/Theme.DozeEmDoze.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

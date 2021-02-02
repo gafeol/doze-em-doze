@@ -23,6 +23,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.content.ContextCompat
 import com.gafeol.dozeemdoze.AlarmView
+import com.gafeol.dozeemdoze.util.formatTime
 import com.gafeol.dozeemdoze.util.getUserDBRef
 import com.gafeol.dozeemdoze.util.sendNotification
 import com.google.firebase.database.DataSnapshot
@@ -40,7 +41,7 @@ class AlarmReceiver: BroadcastReceiver() {
         Log.d("ALARM", "Received alarm time $time")
         getUserDBRef().child("alarms/$time").addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                var msg = "Agora é $time. Hora de tomar "
+                var msg = "Agora é ${formatTime(time)}. Hora de tomar "
                 var meds : MutableList<String> = mutableListOf()
                 snapshot.children.forEachIndexed { index, med ->
                     if(index > 0)

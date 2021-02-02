@@ -15,11 +15,17 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
+import com.gafeol.dozeemdoze.util.cleanEmail
+import com.gafeol.dozeemdoze.util.getUserDBRef
 import com.gafeol.dozeemdoze.util.isAuth
+import com.gafeol.dozeemdoze.util.setAlarm
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_navigation.*
 import java.util.*
 
@@ -115,7 +121,7 @@ class Navigation : AppCompatActivity() {
 
     fun saveUID(user : FirebaseUser) {
         val userRef = FirebaseDatabase.getInstance().reference.child("users")
-        val cleanEmail = user.email!!.split('.').joinToString(",")
+        val cleanEmail = cleanEmail(user.email!!)
         userRef.child(cleanEmail).setValue(user.uid)
     }
 
@@ -131,6 +137,7 @@ class Navigation : AppCompatActivity() {
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundleOf(Pair("name", user!!.displayName), Pair("email", user.email)))
                 updateAuthButtons()
                 saveUID(user)
+                updateAlarms()
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
@@ -147,6 +154,21 @@ class Navigation : AppCompatActivity() {
             else
                 startMedications()
         }
+    }
+
+    private fun updateAlarms() {
+        getUserDBRef().child("alarms").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach { timeSnap ->
+                    val time = timeSnap.key!!.toInt()
+                    setAlarm(applicationContext, intent, time)
+                    Log.d("ALARM", "Set alarm for time $time")
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     private fun startMedications() {

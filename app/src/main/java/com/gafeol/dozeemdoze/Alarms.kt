@@ -150,4 +150,3 @@ class Alarms : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListe
         }
     }
 }
-
