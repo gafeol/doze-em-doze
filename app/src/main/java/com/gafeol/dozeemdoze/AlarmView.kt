@@ -18,6 +18,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.gafeol.dozeemdoze.receiver.SnoozeReceiver
 import com.gafeol.dozeemdoze.util.getUserDBRef
@@ -38,7 +39,10 @@ class AlarmView : AppCompatActivity() {
         var activity : Activity? = null
     }
 
+    fun forceLightTheme() = AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        forceLightTheme()
         activity = this
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm_view)

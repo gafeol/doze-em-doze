@@ -8,8 +8,8 @@
     tools:context=".AddDependant">
 
         <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:paddingVertical="15dp"
             android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toTopOf="@+id/saveButton"
@@ -25,6 +25,12 @@
                 android:padding="5dp"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Digite o nome do(a) dependente"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
                 <EditText
                     android:id="@+id/nameEditText"
                     android:layout_width="match_parent"
@@ -37,6 +43,7 @@
                     android:id="@+id/emailCheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:onClick="toggleCheckBox"
                     android:text="Quer criar ou conectar uma conta de dependente?"/>
 
@@ -45,7 +52,7 @@
                     android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
+                    android:layout_marginVertical="10dp"
                     android:hint="Email do dependente"
                     android:inputType="textShortMessage" />
 
@@ -54,15 +61,15 @@
                     android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
-                    android:text="Quer que este dependente tire uma foto para toda medicação que tiver que tomar?"/>
+                    android:layout_marginVertical="10dp"
+                    android:text="Deseja ativar a confirmação por foto para esse dependente?"/>
 
                 <TextView
                     android:id="@+id/iconTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Escolha um ícone para essa pessoa"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
