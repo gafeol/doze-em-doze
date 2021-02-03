@@ -12,6 +12,7 @@ import com.firebase.ui.auth.AuthUI
 import com.gafeol.dozeemdoze.models.Alarm
 import com.gafeol.dozeemdoze.models.AlarmAdapter
 import com.gafeol.dozeemdoze.util.getUserDBRef
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -22,7 +23,8 @@ import kotlinx.android.synthetic.main.app_bar_medications.*
 import kotlinx.android.synthetic.main.content_alarms.*
 import kotlinx.android.synthetic.main.nav_header.view.*
 
-class Alarms : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
+class Alarms : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+    BottomNavigationView.OnNavigationItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarms)
@@ -62,6 +64,12 @@ class Alarms : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListe
             FirebaseAuth.getInstance().currentUser?.let { user ->
                 navView.getHeaderView(0).helloTextView.text = "Olá ${user.displayName}!"
             }
+        }
+        val bottomNavView: BottomNavigationView = findViewById(R.id.bottom_nav_view)
+        if(bottomNavView != null){
+            bottomNavView.setOnNavigationItemSelectedListener(this)
+            bottomNavView.selectedItemId = R.id.nav_alarms
+            bottomNavView.background = null
         }
     }
     // Nav Drawer

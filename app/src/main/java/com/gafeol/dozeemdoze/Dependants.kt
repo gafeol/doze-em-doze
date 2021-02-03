@@ -15,6 +15,7 @@ import com.firebase.ui.auth.AuthUI
 import com.gafeol.dozeemdoze.models.Dependant
 import com.gafeol.dozeemdoze.models.DependantAdapter
 import com.gafeol.dozeemdoze.util.getUserDBRef
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -25,7 +26,8 @@ import kotlinx.android.synthetic.main.app_bar_medications.*
 import kotlinx.android.synthetic.main.content_dependants.*
 import kotlinx.android.synthetic.main.nav_header.view.*
 
-class Dependants : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
+class Dependants : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+    BottomNavigationView.OnNavigationItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dependants)
@@ -65,6 +67,14 @@ class Dependants : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             FirebaseAuth.getInstance().currentUser?.let { user ->
                 navView.getHeaderView(0).helloTextView.text = "Olá ${user.displayName}!"
             }
+        }
+
+        val bottomNavView: BottomNavigationView = findViewById(R.id.bottom_nav_view)
+        if(bottomNavView != null){
+            bottomNavView.setOnNavigationItemSelectedListener(this)
+            bottomNavView.selectedItemId = R.id.nav_dependants
+            bottomNavView.background = null
+            bottomNavView.menu.getItem(3).isEnabled = false
         }
     }
     // Nav Drawer

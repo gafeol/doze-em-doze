@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import com.firebase.ui.auth.AuthUI
 import com.gafeol.dozeemdoze.util.getUserDBRef
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -28,7 +29,8 @@ import kotlinx.android.synthetic.main.app_bar_medications.*
 import kotlinx.android.synthetic.main.content_medications.*
 import kotlinx.android.synthetic.main.nav_header.view.*
 
-class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
+class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+    BottomNavigationView.OnNavigationItemSelectedListener {
     fun forceLightTheme() = AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
     private lateinit var medEventListener : ValueEventListener
@@ -79,6 +81,13 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             FirebaseAuth.getInstance().currentUser?.let { user ->
                 navView.getHeaderView(0).helloTextView.text = "Olá ${user.displayName}!"
             }
+        }
+
+        val bottomNavView: BottomNavigationView = findViewById(R.id.bottom_nav_view)
+        if(bottomNavView != null){
+            bottomNavView.setOnNavigationItemSelectedListener(this)
+            bottomNavView.background = null
+            bottomNavView.menu.getItem(3).isEnabled = false
         }
     }
 
@@ -192,4 +201,3 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         }
     }
 }
-
