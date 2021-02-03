@@ -39,15 +39,21 @@ class Dependants : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             override fun onDataChange(snapshot: DataSnapshot) {
                 var dependantList = mutableListOf<Dependant>()
                 snapshot.children.forEach{snap -> dependantList.add(Dependant(snap))}
-                val adapter = DependantAdapter(applicationContext, dependantList)
-                dependantListView.adapter = adapter
-                dependantListView.onItemClickListener = AdapterView.OnItemClickListener {
-                    parent, view, position, id ->
-                    Toast.makeText(applicationContext, "Nao implementado", Toast.LENGTH_SHORT).show()
-                    //val intent = Intent(applicationContext, DependantView::class.java).apply{}
-                    //val dependanticationBundle = dependantList[position].bundle()
-                    //intent.putExtra("dependant", dependanticationBundle)
-                    //startActivity(intent)
+                if(dependantList.isEmpty()){
+                    initialMessageLinearLayout.visibility = View.VISIBLE
+                }
+                else {
+                    initialMessageLinearLayout.visibility = View.GONE
+                    val adapter = DependantAdapter(applicationContext, dependantList)
+                    dependantListView.adapter = adapter
+                    dependantListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+                        Toast.makeText(applicationContext, "Nao implementado", Toast.LENGTH_SHORT)
+                            .show()
+                        //val intent = Intent(applicationContext, DependantView::class.java).apply{}
+                        //val dependanticationBundle = dependantList[position].bundle()
+                        //intent.putExtra("dependant", dependanticationBundle)
+                        //startActivity(intent)
+                    }
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -118,11 +124,6 @@ class Dependants : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         }
     }
 
-    fun startAddDependant(v: View){
-        val intent = Intent(this, AddDependant::class.java).apply{}
-        startActivity(intent)
-    }
-
     // MENU with sign out option
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -158,5 +159,14 @@ class Dependants : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             }
             else -> false
         }
+    }
+
+    fun startAddDependant(view: View) {
+        val intent = Intent(this, AddDependant::class.java).apply{}
+        startActivity(intent)
+    }
+    fun startAddMedication(view: View) {
+        val intent = Intent(this, AddMedication::class.java).apply{}
+        startActivity(intent)
     }
 }

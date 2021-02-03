@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -36,16 +37,22 @@ class Alarms : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListe
             override fun onDataChange(snapshot: DataSnapshot) {
                 var alarmList = mutableListOf<Alarm>()
                 snapshot.children.forEach{snap -> alarmList.add(Alarm(snap))}
-                val adapter = AlarmAdapter(applicationContext, alarmList)
-                alarmListView.adapter = adapter
-                /*
-                alarmListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-                    Toast.makeText(applicationContext, "Nao implementado", Toast.LENGTH_SHORT).show()
-                    //val intent = Intent(applicationContext, AlarmView::class.java).apply{}
-                    //val alarmicationBundle = alarmList[position].bundle()
-                    //intent.putExtra("alarm", alarmicationBundle)
-                    //startActivity(intent)
-                } */
+                if(alarmList.isEmpty()){
+                    initialMessageLinearLayout.visibility = View.VISIBLE
+                }
+                else {
+                    initialMessageLinearLayout.visibility = View.GONE
+                    val adapter = AlarmAdapter(applicationContext, alarmList)
+                    alarmListView.adapter = adapter
+                    /*
+                    alarmListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+                        Toast.makeText(applicationContext, "Nao implementado", Toast.LENGTH_SHORT).show()
+                        //val intent = Intent(applicationContext, AlarmView::class.java).apply{}
+                        //val alarmicationBundle = alarmList[position].bundle()
+                        //intent.putExtra("alarm", alarmicationBundle)
+                        //startActivity(intent)
+                    } */
+                }
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.d("FIREBASE", "Cancelled alarms search")
@@ -156,5 +163,14 @@ class Alarms : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListe
             }
             else -> false
         }
+    }
+
+    fun startAddDependant(view: View) {
+        val intent = Intent(this, AddDependant::class.java).apply{}
+        startActivity(intent)
+    }
+    fun startAddMedication(view: View) {
+        val intent = Intent(this, AddMedication::class.java).apply{}
+        startActivity(intent)
     }
 }

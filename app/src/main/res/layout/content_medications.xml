@@ -12,6 +12,35 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <LinearLayout
+        android:id="@+id/initialMessageLinearLayout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_capsules"/>
+        <TextView
+            android:text="Vamos começar?\n Adicione suas primeiras medicações!"
+            android:layout_marginVertical="30dp"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_big"
+            android:layout_gravity="center"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="startAddMedication"
+            android:layout_gravity="center"
+            android:text="Adicionar medicação"/>
+    </LinearLayout>
+
     <ListView
         android:layout_marginTop="60dp"
         android:id="@+id/medListView"

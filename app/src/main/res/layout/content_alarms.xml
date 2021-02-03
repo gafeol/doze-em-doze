@@ -12,6 +12,41 @@ tools:context=".Alarms">
 
 </com.google.android.material.appbar.AppBarLayout>
 
+    <LinearLayout
+        android:id="@+id/initialMessageLinearLayout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_alarm_clock_outline"/>
+        <TextView
+            android:text="Adicione suas primeiras medicações para ver sua agenda de alarmes!"
+            android:layout_marginVertical="30dp"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_big"
+            android:layout_gravity="center"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="startAddMedication"
+            android:layout_gravity="center"
+            android:text="Adicionar medicação"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="startAddDependant"
+            android:text="Adicionar dependente"/>
+    </LinearLayout>
+
 <ListView
     android:layout_marginTop="60dp"
     android:id="@+id/alarmListView"

@@ -53,14 +53,21 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             override fun onDataChange(snapshot: DataSnapshot) {
                 var medList = mutableListOf<Medication>()
                 snapshot.children.forEach{snap -> medList.add(Medication(snap))}
-                val adapter = MedicationAdapter(applicationContext, medList)
-                medListView.adapter = adapter
-                medListView.onItemClickListener = AdapterView.OnItemClickListener {
-                    parent, view, position, id ->
-                    val intent = Intent(applicationContext, MedicationView::class.java).apply{}
-                    val medicationBundle = medList[position].bundle()
-                    intent.putExtra("medication", medicationBundle)
-                    startActivity(intent)
+                if(medList.isEmpty()){
+                    initialMessageLinearLayout.visibility = View.VISIBLE
+                }
+                else {
+                    initialMessageLinearLayout.visibility = View.GONE
+                    val adapter = MedicationAdapter(applicationContext, medList)
+                    medListView.adapter = adapter
+                    medListView.onItemClickListener =
+                        AdapterView.OnItemClickListener { parent, view, position, id ->
+                            val intent =
+                                Intent(applicationContext, MedicationView::class.java).apply {}
+                            val medicationBundle = medList[position].bundle()
+                            intent.putExtra("medication", medicationBundle)
+                            startActivity(intent)
+                        }
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -199,5 +206,10 @@ class Medications : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             }
             else -> false
         }
+    }
+
+    fun startAddDependant(view: View) {
+        val intent = Intent(this, AddDependant::class.java).apply{}
+        startActivity(intent)
     }
 }
