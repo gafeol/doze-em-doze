@@ -11,5 +11,5 @@
         android:title="Configurações"/>
     <item
         android:id="@+id/signOutItem"
-        android:title="Sign out"/>
+        android:title="Sair da sua conta"/>
 </menu>

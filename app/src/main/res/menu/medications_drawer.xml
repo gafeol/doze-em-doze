@@ -32,6 +32,6 @@ limitations under the License. -->
         <item
             android:id="@+id/nav_sign_out"
             android:icon="@drawable/ic_leave"
-            android:title="Sign out" />
+            android:title="Sair da sua conta" />
     </group>
 </menu>

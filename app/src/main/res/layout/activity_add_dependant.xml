@@ -12,7 +12,7 @@
             android:layout_height="0dp"
             android:paddingVertical="15dp"
             android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/saveButton"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -28,7 +28,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Digite o nome do(a) dependente"
+                    android:gravity="center"
+                    android:text="Digite o nome da pessoa dependente"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
                 <EditText
@@ -36,33 +37,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="5dp"
-                    android:hint="Nome do dependente"
+                    android:hint="Nome"
                     android:inputType="textShortMessage" />
-
-                <CheckBox
-                    android:id="@+id/emailCheckBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:onClick="toggleCheckBox"
-                    android:text="Quer criar ou conectar uma conta de dependente?"/>
-
-                <EditText
-                    android:id="@+id/emailEditText"
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    android:hint="Email do dependente"
-                    android:inputType="textShortMessage" />
-
-                <CheckBox
-                    android:id="@+id/confirmationCheckBox"
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    android:text="Deseja ativar a confirmação por foto para esse dependente?"/>
 
                 <TextView
                     android:id="@+id/iconTextView"
@@ -76,7 +52,7 @@
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp">
+                    android:layout_marginBottom="20dp">
 
                     <LinearLayout
                         android:id="@+id/imgLinearLayout"
@@ -337,14 +313,39 @@
 
                     </LinearLayout>
                 </HorizontalScrollView>
+
+                <CheckBox
+                    android:id="@+id/emailCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:onClick="toggleCheckBox"
+                    android:text="Seu dependente possui uma conta no aplicativo?"/>
+
+                <EditText
+                    android:id="@+id/emailEditText"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:hint="Email do dependente"
+                    android:inputType="textShortMessage" />
+
+                <CheckBox
+                    android:id="@+id/confirmationCheckBox"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:text="Deseja ativar a confirmação por foto para esse dependente?"/>
+
+                <Button
+                    android:id="@+id/saveButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:onClick="saveDependant"
+                    android:text="Salvar" />
             </LinearLayout>
         </ScrollView>
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:onClick="saveDependant"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:text="Salvar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

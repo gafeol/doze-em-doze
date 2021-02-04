@@ -10,9 +10,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingVertical="15dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/saveButton"
+        android:paddingTop="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -48,21 +47,20 @@
                 android:id="@+id/medicationTypeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="2dp"
-                android:text="Escolha um ícone para esta medicação"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:text="Escolha um ícone para a medicação"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="20dp">
 
                 <LinearLayout
                     android:id="@+id/imgLinearLayout"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:orientation="horizontal">
 
                     <ImageButton
@@ -94,6 +92,26 @@
                         android:scaleType="fitCenter"
                         android:src="@drawable/ic_injection"
                         android:tag="ic_injection" />
+
+                    <ImageButton
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:background="@drawable/border_selector"
+                        android:onClick="chooseImage"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_ointment"
+                        android:tag="ic_ointment" />
+
+                    <ImageButton
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginHorizontal="5dp"
+                        android:background="@drawable/border_selector"
+                        android:onClick="chooseImage"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_vial"
+                        android:tag="ic_vial" />
 
                 </LinearLayout>
             </HorizontalScrollView>
@@ -130,8 +148,7 @@
                 android:id="@+id/infoDependantTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:drawableLeft="@drawable/ic_info"
                 android:drawablePadding="5dp"
                 android:textSize="@dimen/text_size_medium"
@@ -143,23 +160,24 @@
                 android:id="@+id/patientTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="Quem deve tomar essa medicação?"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
             <Spinner
                 android:visibility="gone"
                 android:id="@+id/patientSpinner"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:onClick="saveMedication"
+                android:text="Salvar" />
         </LinearLayout>
     </ScrollView>
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:onClick="saveMedication"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Salvar" />
 </androidx.constraintlayout.widget.ConstraintLayout>
