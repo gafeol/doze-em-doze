@@ -39,35 +39,59 @@ class AlarmReceiver: BroadcastReceiver() {
 
         val time = intent.getIntExtra("time", 0)
         Log.d("ALARM", "Received alarm time $time")
-        getUserDBRef().child("alarms/$time").addListenerForSingleValueEvent(object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var msg = "Agora é ${formatTime(time)}. Hora de tomar "
-                var meds : MutableList<String> = mutableListOf()
-                snapshot.children.forEachIndexed { index, med ->
-                    if(index > 0)
-                        msg += ", "
-                    msg += med.key!!
-                    meds.add(med.key!!)
+        if(intent.getStringArrayExtra("meds")?.isNotEmpty() == true){ // Se o intent ja veio com o meds nao precisa chamar firebase (esse e o caso do snooze)
+            var meds : MutableList<String> = intent.getStringArrayExtra("meds")!!.toMutableList()
+            var msg = "Agora é ${formatTime(time)}. Hora de tomar "
+            meds.forEachIndexed { index, med ->
+                if(index > 0)
+                    msg += ", "
+                msg += med
+            }
+            notificationManager.sendNotification(
+                    msg,
+                    context
+            )
+            val alarmViewIntent = Intent(context, AlarmView::class.java).apply {
+                this.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                        Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or
+                        Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
+                        Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP
+                this.putExtra("meds", meds.toTypedArray())
+            }
+            context.startActivity(alarmViewIntent)
+        }
+        else {
+            getUserDBRef().child("alarms/$time").addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var msg = "Agora é ${formatTime(time)}. Hora de tomar "
+                    var meds: MutableList<String> = mutableListOf()
+                    snapshot.children.forEachIndexed { index, med ->
+                        if (index > 0)
+                            msg += ", "
+                        msg += med.key!!
+                        meds.add(med.key!!)
+                    }
+
+                    notificationManager.sendNotification(
+                            msg,
+                            context
+                    )
+                    val alarmViewIntent = Intent(context, AlarmView::class.java).apply {
+                        this.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                                Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or
+                                Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
+                                Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP
+                        this.putExtra("meds", meds.toTypedArray())
+                    }
+
+                    context.startActivity(alarmViewIntent)
                 }
 
-                notificationManager.sendNotification(
-                        msg,
-                        context
-                )
-                val alarmViewIntent = Intent(context, AlarmView::class.java).apply {
-                    this.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-                            Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or
-                            Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
-                            Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP
-                    this.putExtra("meds", meds.toTypedArray())
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
                 }
-
-                context.startActivity(alarmViewIntent)
-            }
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
+            })
+        }
     }
 
 }

@@ -17,6 +17,7 @@ class SnoozeReceiver: BroadcastReceiver() {
         fun setSnoozeAlarm(context : Context, intent: Intent) {
             Log.d("SNOOZE", "Setting snooze alarm")
             val notifyIntent = Intent(context, AlarmReceiver::class.java)
+            notifyIntent.putExtra("meds", intent.getStringArrayExtra("meds"))
             val notifyPendingIntent = PendingIntent.getBroadcast(
                     context,
                     0,
