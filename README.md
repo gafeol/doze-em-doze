@@ -1,11 +1,27 @@
 # De 12 em 12 horas
 
+![logo do De 12 em 12 horas, fundo azul escuro com relógio desenhado por linhas brancas, com número 12 aparecendo](img/logo_square.png)
+
 Este aplicativo busca ajudar pacientes e cuidadores a respeitarem seus horários de medicações por meio de alarmes e notificações.
 O projeto está [disponível](https://play.google.com/store/apps/details?id=com.gafeol.dozeemdoze) gratuitamente para dispositivos Android na Play Store.
 
-Utilizando o aplicativo é possível cadastrar qualquer tipo de medicação de uso contínuo e configurar alarmes de lembretes para o horário de cada dose desta medicação. 
+Utilizando o aplicativo é possível cadastrar qualquer tipo de medicação de uso contínuo e configurar alarmes de lembretes para o horário de cada dose desta medicação.
 
 É possível também realizar o cadastro de dependentes, pessoas que recebem seu auxílio no controle das medicações. Cada dependente pode ter, por sua vez, um cadastro de medicações próprias ou de alarmes.
+
+## Capturas de tela
+
+![](img/Screenshot_1615508351.png)
+![](img/Screenshot_1615508377.png)
+![](img/Screenshot_1615508379.png)
+![](img/Screenshot_1615508385.png)
+![](img/Screenshot_1615508388.png)
+![](img/Screenshot_1615508397.png)
+![](img/Screenshot_1615508487.png)
+![](img/Screenshot_1615508491.png)
+![](img/Screenshot_1615508493.png)
+![](img/Screenshot_1615508550.png)
+![](img/Screenshot_1615508554.png)
 
 ## Créditos dos ícones e imagens usadas
 
