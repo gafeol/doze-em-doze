@@ -18,6 +18,7 @@ class SnoozeReceiver: BroadcastReceiver() {
             Log.d("SNOOZE", "Setting snooze alarm")
             val notifyIntent = Intent(context, AlarmReceiver::class.java)
             notifyIntent.putExtra("meds", intent.getStringArrayExtra("meds"))
+            notifyIntent.putExtra("time", intent.getIntExtra("time", 0))
             val notifyPendingIntent = PendingIntent.getBroadcast(
                     context,
                     0,
@@ -26,7 +27,7 @@ class SnoozeReceiver: BroadcastReceiver() {
             )
             val alarmCalendar = GregorianCalendar().also{
                 it.timeInMillis = System.currentTimeMillis()
-                it.add(Calendar.MINUTE, 5)
+                it.add(Calendar.MINUTE, 1)
                 it.set(Calendar.SECOND, 0)
                 it.set(Calendar.MILLISECOND, 0)
             }
