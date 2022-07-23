@@ -32,13 +32,13 @@ import com.google.firebase.database.ValueEventListener
 
 class AlarmReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+        val time = intent.getIntExtra("time", 0)
+        Log.d("ALARM", "Received alarm time $time")
         val notificationManager = ContextCompat.getSystemService(
                 context,
                 NotificationManager::class.java
         ) as NotificationManager
 
-        val time = intent.getIntExtra("time", 0)
-        Log.d("ALARM", "Received alarm time $time")
         if(intent.getStringArrayExtra("meds")?.isNotEmpty() == true){ // Se o intent ja veio com o meds nao precisa chamar firebase (esse e o caso do snooze)
             var meds : MutableList<String> = intent.getStringArrayExtra("meds")!!.toMutableList()
             var msg = "Lembrete das ${formatTime(time)}! Hora de tomar "

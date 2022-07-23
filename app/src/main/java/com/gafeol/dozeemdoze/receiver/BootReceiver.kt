@@ -18,7 +18,7 @@ class BootReceiver : BroadcastReceiver() {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         snapshot.children.forEach { timeSnap ->
                             val time = timeSnap.key!!.toInt()
-                            setAlarm(context, intent, time)
+                            setAlarm(context, time)
                         }
                     }
                     override fun onCancelled(error: DatabaseError) {

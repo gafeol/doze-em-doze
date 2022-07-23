@@ -120,7 +120,7 @@ class AddMedication : AppCompatActivity() {
                 dependant
             )
             med.save()
-            med.setAlarm(applicationContext, intent)
+            med.setAlarm(applicationContext)
             val minutesToAlarm = med.minutesToAlarm()
             Toast.makeText(applicationContext, "Alarme tocará em ${minutesToAlarm/60} horas e ${minutesToAlarm%60} minutos, repetindo a cada ${frequency/60} horas", Toast.LENGTH_SHORT).show()
             val medBundle = med.bundle()

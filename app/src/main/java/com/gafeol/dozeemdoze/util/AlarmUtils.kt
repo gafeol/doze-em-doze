@@ -10,15 +10,10 @@ import java.util.*
 
 fun minutesToday(c: Calendar = Calendar.getInstance()) = c.get(Calendar.HOUR_OF_DAY)*60 + c.get(Calendar.MINUTE)
 
-fun setAlarm(context: Context, intent: Intent, time : Int){
+fun setAlarm(context: Context, time : Int){
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
-    val pendingIntent = PendingIntent.getService(context, time, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-    if (pendingIntent != null && alarmManager != null) {
-        alarmManager.cancel(pendingIntent)
-    }
     val alarmIntent = Intent(context, AlarmReceiver::class.java).let { alarmIntent ->
         alarmIntent.putExtra("time", time)
-        alarmIntent.flags = Intent.FLAG_RECEIVER_FOREGROUND
         PendingIntent.getBroadcast(context, time, alarmIntent, 0)
     }
 

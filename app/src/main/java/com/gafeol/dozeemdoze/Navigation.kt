@@ -1,6 +1,5 @@
 package com.gafeol.dozeemdoze
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
@@ -8,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.util.Log.INFO
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
-import com.firebase.ui.auth.IdpResponse
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.gafeol.dozeemdoze.util.cleanEmail
 import com.gafeol.dozeemdoze.util.getUserDBRef
@@ -30,10 +29,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_navigation.*
 import java.util.*
+import java.util.logging.Level.INFO
 
 class Navigation : AppCompatActivity() {
-    private val RC_SIGN_IN: Int = 123
-
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
 
     private val RC_OVERLAY_PERMISSION = 111
@@ -86,10 +84,12 @@ class Navigation : AppCompatActivity() {
 
     private fun isXiaomi() : Boolean = ("xiaomi" == Build.MANUFACTURER.toLowerCase(Locale.ROOT))
 
+    private fun hasAlarmsPermission() : Boolean = (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.canDrawOverlays(this))
+
     private fun updateAuthButtons() {
         if(isAuth()) {
             signInButton.visibility = View.GONE
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this))
+            if (!hasAlarmsPermission())
                 createPermissionAlertDialog()
             else
                 startMedications()
@@ -109,12 +109,17 @@ class Navigation : AppCompatActivity() {
         updateAuthButtons()
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateAuthButtons()
+    }
+
     fun onSignIn (v: View) {
         // Choose authentication providers
         // https://firebase.google.com/docs/auth/android/firebaseui#kotlin+ktx
         val providers = arrayListOf(
-                AuthUI.IdpConfig.EmailBuilder().build(),
-                AuthUI.IdpConfig.GoogleBuilder().build())
+                AuthUI.IdpConfig.EmailBuilder().build()
+        )
 
         val signInIntent = AuthUI.getInstance()
             .createSignInIntentBuilder()
@@ -155,7 +160,7 @@ class Navigation : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children.forEach { timeSnap ->
                     val time = timeSnap.key!!.toInt()
-                    setAlarm(applicationContext, intent, time)
+                    setAlarm(applicationContext, time)
                     Log.d("ALARM", "Set alarm for time $time")
                 }
             }

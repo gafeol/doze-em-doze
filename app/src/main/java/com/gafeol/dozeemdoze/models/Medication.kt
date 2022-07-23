@@ -141,8 +141,8 @@ class Medication(val name: String,
         return schedule
     }
 
-    fun setAlarm(context : Context, intent: Intent){
-        alarmSchedule().forEach { time -> setAlarm(context, intent, time) }
+    fun setAlarm(context : Context){
+        alarmSchedule().forEach { time -> setAlarm(context, time) }
     }
 }
 

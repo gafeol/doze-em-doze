@@ -1,7 +1,6 @@
 package com.gafeol.dozeemdoze.models
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,15 +48,12 @@ class AlarmAdapter(context: Context, alarmList: List<Alarm>)
     }
 
     private fun disableIfPast(v: View, time : Int){
-        Log.d("ALARM", "Time ${formatTime(time)} min $time minutes today ${minutesToday()}")
         if(time < minutesToday()) {
-            Log.d("ALARM", "Time ${formatTime(time)} min $time  < ${minutesToday()}")
             val disabledColor = ContextCompat.getColor(v.context, R.color.text_disabled)
             v.timeTextView.setTextColor(disabledColor)
             v.medicationsTextView.setTextColor(disabledColor)
         }
         else{
-            Log.d("ALARM", "Time ${formatTime(time)} min $time  >= ${minutesToday()}")
             val normalColor = ContextCompat.getColor(v.context, R.color.black)
             v.timeTextView.setTextColor(normalColor)
             v.medicationsTextView.setTextColor(normalColor)

@@ -137,7 +137,7 @@ class AlarmView : AppCompatActivity() {
                 }
                 Activity.RESULT_CANCELED -> {
                     // User cancelled the image capture
-                    Toast.makeText(applicationContext, "Compartilhe uma foto dos seus medicamentos para quem cuida de você!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Compartilhe uma foto dos seus medicamentos para quem cuida de você!", Toast.LENGTH_LONG).show()
                 }
                 else -> {
                     // Image capture failed, advise user
